@@ -1,0 +1,17 @@
+<!doctype html>
+<html lang="ru"><head><meta charset="utf-8"><title>Absolute Online — keys</title>
+<style>html,body{margin:0;background:transparent;width:1px;height:1px;overflow:hidden}</style></head>
+<body>
+<script>
+/* Невидимая страница: ловит Tab и Esc и сообщает серверу. Работает, только если клиент
+   передаёт клавиши странице без фокуса. */
+const ok=typeof cef!=='undefined'&&cef&&typeof cef.emit==='function';
+let last=0;
+document.addEventListener('keydown',e=>{
+ if(!ok||e.repeat)return;
+ const now=Date.now();if(now-last<250)return;
+ if(e.key==='Tab'){last=now;e.preventDefault();cef.emit('key:tab','')}
+ else if(e.key==='Escape'){last=now;cef.emit('key:esc','')}
+});
+if(ok)cef.emit('keys:ready','');
+</script></body></html>
