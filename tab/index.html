@@ -1,0 +1,205 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Absolute Online — TAB</title>
+<style>
+:root{--bg:#0d0d0f;--panel:#16161a;--panel2:#1d1d22;--line:#2a2a31;--txt:#f2f2f5;--mut:#8b8b97;--acc:#ff9a3d;--acc2:#ffb766;--red:#ff4d5e;--grn:#3ddc84}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{height:100%;background:rgba(8,8,10,.92);color:var(--txt);font-family:"Segoe UI",Roboto,Arial,sans-serif;overflow:hidden;user-select:none}
+.app{height:100%;display:flex;flex-direction:column}
+header{display:flex;align-items:center;gap:14px;padding:18px 32px 0;border-bottom:1px solid var(--line)}
+.key{min-width:28px;height:28px;border:1px solid #444;border-radius:7px;display:grid;place-items:center;font-size:12px;color:var(--mut);cursor:pointer}
+nav{display:flex;flex:1;justify-content:center;gap:6px}
+.tab{background:none;border:0;color:var(--mut);padding:8px 20px 14px;font-size:11px;letter-spacing:.14em;text-transform:uppercase;cursor:pointer;position:relative;display:flex;flex-direction:column;align-items:center;gap:6px}
+.tab svg{width:20px;height:20px;fill:currentColor}
+.tab:hover{color:#ddd}
+.tab.on{color:#fff}
+.tab.on::after{content:"";position:absolute;left:14px;right:14px;bottom:-1px;height:2px;background:var(--acc);box-shadow:0 0 12px var(--acc)}
+.brand{font-weight:900;letter-spacing:.04em;font-size:22px;line-height:1;text-align:right;padding-bottom:10px}
+.brand small{display:block;color:var(--acc);font-size:15px;font-style:italic;letter-spacing:.12em}
+main{flex:1;overflow:auto;padding:24px 32px}
+.page{display:none;height:100%}
+.page.on{display:block}
+.split{display:grid;grid-template-columns:1fr 360px;gap:36px;height:100%}
+table{width:100%;border-collapse:collapse}
+th{font-size:11px;letter-spacing:.14em;color:var(--mut);text-transform:uppercase;padding:10px 6px;cursor:pointer;text-align:center}
+th.l{text-align:left}
+td{padding:5px 6px;text-align:center;font-size:14px;border-bottom:1px solid #1b1b20}
+td.n,th.n{text-align:left}
+tr.me td{color:var(--acc2)}
+tbody tr:hover td{background:#18181d}
+.pager{display:flex;justify-content:center;align-items:center;gap:26px;margin-top:14px}
+.pager button,.btn{background:var(--panel2);border:1px solid var(--line);color:#fff;border-radius:8px;padding:8px 16px;cursor:pointer;font-size:14px}
+.pager button:hover,.btn:hover{border-color:var(--acc)}
+.pager button:disabled{opacity:.3;cursor:default}
+.side h4{font-size:11px;letter-spacing:.16em;color:var(--mut);text-transform:uppercase;padding-bottom:8px;border-bottom:1px solid var(--line);margin-bottom:14px}
+.cnt{display:flex;justify-content:space-between;align-items:center;gap:12px}
+.cnt b{color:var(--mut);font-size:14px}
+.cnt b span{color:#fff}
+input.s{flex:1;background:var(--panel);border:1px solid var(--line);color:#fff;border-radius:8px;padding:10px 12px;font-size:14px;outline:none;user-select:text}
+input.s:focus{border-color:var(--acc)}
+.top{display:flex;gap:30px;align-items:center;padding-bottom:20px;border-bottom:1px solid var(--line)}
+.lvl{text-align:center;min-width:90px}
+.lvl small{display:block;font-size:11px;letter-spacing:.14em;color:var(--mut)}
+.lvl big{font-size:52px;font-weight:300}
+.bar{height:3px;background:#2c2c33;border-radius:2px;margin-top:6px;overflow:hidden}
+.bar i{display:block;height:100%;background:var(--acc)}
+.nm{font-size:30px;font-weight:600}
+.nm span{color:var(--mut);font-size:22px;font-weight:400}
+.nm #sName{color:#fff;font-size:30px;font-weight:600}
+.st{margin-top:8px;color:#cfcfd6;font-size:14px}
+.st .red{color:var(--red)}
+.money{margin-left:auto;display:flex;gap:34px}
+.money div small{display:block;font-size:10px;letter-spacing:.14em;color:var(--mut);text-transform:uppercase}
+.money div b{font-size:20px;font-weight:500}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:12px 40px;padding-top:22px}
+.grid h4{grid-column:1/-1;font-size:11px;letter-spacing:.16em;color:var(--mut);text-transform:uppercase;border-bottom:1px solid var(--line);padding-bottom:8px}
+.it small{display:block;font-size:11px;letter-spacing:.1em;color:var(--mut);text-transform:uppercase;margin-bottom:3px}
+.it b{font-size:17px;font-weight:500}
+.soon{display:grid;place-items:center;height:100%;text-align:center;color:var(--mut)}
+.soon b{display:block;color:#fff;font-size:22px;margin-bottom:8px}
+.demo{position:fixed;left:12px;bottom:10px;font-size:11px;color:var(--acc);opacity:.9;max-width:70%}
+.hint{position:fixed;right:20px;bottom:10px;font-size:11px;color:var(--mut)}
+::-webkit-scrollbar{width:8px}::-webkit-scrollbar-thumb{background:#2c2c33;border-radius:4px}
+</style>
+</head>
+<body>
+<div class="app">
+<header>
+  <div class="key" id="kq">Q</div>
+  <nav id="nav"></nav>
+  <div class="key" id="ke">E</div>
+  <div class="brand">ABSOLUTE<small>ONLINE</small></div>
+</header>
+<main>
+  <section class="page on" id="p-players">
+    <div class="split">
+      <div>
+        <table>
+          <thead><tr><th class="l" data-s="id">ID ↑</th><th class="n">Никнейм</th><th data-s="lvl">Уровень</th><th data-s="ping">Пинг</th></tr></thead>
+          <tbody id="rows"></tbody>
+        </table>
+        <div class="pager"><button id="prev">‹</button><span id="pg">1 / 1</span><button id="next">›</button></div>
+      </div>
+      <div class="side">
+        <h4>Поиск игроков</h4>
+        <div class="cnt"><b>Игроков: <span id="total">0</span></b><input class="s" id="q" placeholder="Поиск по имени" maxlength="24" autocomplete="off"></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="page" id="p-stats">
+    <div class="top">
+      <div class="lvl"><small>УРОВЕНЬ</small><big id="sLvl">-</big><div class="bar"><i id="sBar" style="width:0"></i></div><small id="sExp"></small></div>
+      <div><div class="nm"><span id="sName">-</span> <span id="sId"></span></div><div class="st" id="sSt"></div></div>
+      <div class="money">
+        <div><small>Телефон</small><b id="sPhone">-</b></div>
+        <div><small>Наличные</small><b id="sCash">-</b></div>
+        <div><small>Деньги в банке</small><b id="sBank">-</b></div>
+      </div>
+    </div>
+    <div class="grid">
+      <h4>Общая информация</h4>
+      <div class="it"><small>Организация</small><b id="sOrg">-</b></div>
+      <div class="it"><small>Ранг в организации</small><b id="sRank">-</b></div>
+      <div class="it"><small>Работа</small><b id="sJob">-</b></div>
+      <div class="it"><small>Семья</small><b id="sFam">-</b></div>
+      <div class="it"><small>VIP</small><b id="sVip">-</b></div>
+      <div class="it"><small>Предупреждения</small><b id="sWarn">-</b></div>
+      <div class="it"><small>Уровень админки</small><b id="sAdm">-</b></div>
+    </div>
+  </section>
+
+  <section class="page" id="p-soon"><div class="soon"><div><b id="soonT">Раздел</b>Этот раздел ещё не подключён к данным сервера.</div></div></section>
+</main>
+</div>
+<div class="demo" id="demo" hidden>ДЕМО-ДАННЫЕ (страница открыта вне игры)</div>
+<div class="hint">Q / E — разделы · Esc — закрыть</div>
+<script>
+const TABS=[
+ ['players','Игроки','M16 11c1.7 0 3-1.3 3-3s-1.3-3-3-3-3 1.3-3 3 1.3 3 3 3zm-8 0c1.7 0 3-1.3 3-3S9.700 5 8 5 5 6.300 5 8s1.300 3 3 3zm0 2c-2.300 0-7 1.200-7 3.500V19h14v-2.500C15 14.200 10.300 13 8 13zm8 0c-.3 0-.6 0-1 .1 1.200.8 2 2 2 3.400V19h6v-2.500c0-2.300-4.700-3.500-7-3.500z'],
+ ['stats','Статистика','M5 9h3v10H5zm5.500-5h3v15h-3zM16 13h3v6h-3z'],
+ ['inv','Инвентарь','M3 3h8v8H3zm10 0h8v8h-8zM3 13h8v8H3zm10 0h8v8h-8z'],
+ ['shop','Магазин','M12 2a10 10 0 100 20 10 10 0 000-20zm0 3a7 7 0 016.900 6H5.100A7 7 0 0112 5z'],
+ ['prize','Призы','M20 7h-2.200c.1-.3.200-.6.200-1a3 3 0 00-3-3c-1.200 0-2.200.7-3 1.800C11.200 3.700 10.200 3 9 3a3 3 0 00-3 3c0 .4.100.7.200 1H4v5h1v8h14v-8h1zM15 5a1 1 0 110 2h-2.500C13 5.800 13.800 5 15 5zM9 5c1.200 0 2 .8 2.500 2H9a1 1 0 010-2z'],
+ ['skill','Навыки','M12 2l3 6.500 7 .8-5.200 4.800 1.400 7L12 17.600 5.800 21.100l1.400-7L2 9.300l7-.8z'],
+ ['task','Задания','M19 3H5a2 2 0 00-2 2v14a2 2 0 002 2h14a2 2 0 002-2V5a2 2 0 00-2-2zm-8 14l-4-4 1.400-1.400L11 14.200l5.600-5.600L18 10z']
+];
+const $=id=>document.getElementById(id);
+function bridgeDiag(){try{const k=Object.getOwnPropertyNames(window).filter(n=>/cef|emit|lethal|bridge|engine|samp|native|external|query/i.test(n)).slice(0,12);return 'cef.emit: '+(typeof cef!=='undefined'&&cef&&typeof cef.emit==='function'?'есть':'НЕТ')+(k.length?' | найдено: '+k.join(', '):'')}catch(e){return 'diag error'}}
+const hasCef=typeof cef!=='undefined'&&cef&&typeof cef.emit==='function';
+const emit=(e,a)=>{if(hasCef)cef.emit(e,a==null?'':String(a))};
+let cur=0,page=0,pages=1,q='',sortKey='id',sortDir=1,rows=[],myId=-1,qTimer=null;
+
+const nav=$('nav');
+TABS.forEach((t,i)=>{const b=document.createElement('button');b.className='tab';b.dataset.i=i;
+ b.innerHTML='<svg viewBox="0 0 24 24"><path d="'+t[2]+'"/></svg>'+t[1];b.onclick=()=>openTab(i);nav.appendChild(b)});
+function openTab(i){cur=(i+TABS.length)%TABS.length;
+ document.querySelectorAll('.tab').forEach((b,k)=>b.classList.toggle('on',k===cur));
+ const id=TABS[cur][0];
+ document.querySelectorAll('.page').forEach(p=>p.classList.remove('on'));
+ if(id==='players'||id==='stats')$('p-'+id).classList.add('on');
+ else{$('soonT').textContent=TABS[cur][1];$('p-soon').classList.add('on')}
+ if(id==='players')reqPlayers();
+ if(id==='stats')emit('tab:stats:request','');}
+$('kq').onclick=()=>openTab(cur-1);$('ke').onclick=()=>openTab(cur+1);
+
+const esc=s=>String(s==null?'':s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const money=v=>String(v==null?0:v).replace(/\B(?=(\d{3})+(?!\d))/g,' ')+' ₽';
+
+function reqPlayers(){emit('tab:players',page+'|'+q)}
+function renderRows(){
+ const list=rows.slice().sort((a,b)=>{const x=a[sortKey],y=b[sortKey];return (x>y?1:x<y?-1:0)*sortDir});
+ $('rows').innerHTML=list.map(r=>'<tr class="'+(r.id===myId?'me':'')+'"><td class="n" style="text-align:left;padding-left:10px">'+r.id+'</td><td class="n" style="text-align:center">'+esc(r.n)+'</td><td>'+r.l+'</td><td>'+r.p+'</td></tr>').join('');
+ $('pg').textContent=(page+1)+' / '+pages;
+ $('prev').disabled=page<=0;$('next').disabled=page>=pages-1;}
+$('prev').onclick=()=>{if(page>0){page--;reqPlayers()}};
+$('next').onclick=()=>{if(page<pages-1){page++;reqPlayers()}};
+const SMAP={id:'id',lvl:'l',ping:'p'},SLBL={id:'ID',lvl:'Уровень',ping:'Пинг'};
+document.querySelectorAll('th[data-s]').forEach(th=>th.onclick=()=>{const k=SMAP[th.dataset.s];
+ sortDir=(sortKey===k)?-sortDir:1;sortKey=k;
+ document.querySelectorAll('th[data-s]').forEach(x=>x.textContent=SLBL[x.dataset.s]);
+ th.textContent=SLBL[th.dataset.s]+(sortDir>0?' ↑':' ↓');renderRows()});
+$('q').oninput=e=>{clearTimeout(qTimer);qTimer=setTimeout(()=>{q=$('q').value.trim().replace(/[|"\\]/g,'');page=0;reqPlayers()},250)};
+
+function onPlayers(d){
+ if(typeof d==='string'){try{d=JSON.parse(d)}catch(e){return}}
+ rows=d.rows||[];page=d.page||0;pages=Math.max(1,Math.ceil((d.total||0)/(d.size||24)));
+ $('total').textContent=d.online!=null?d.online:d.total;
+ if(d.me!=null)myId=d.me;
+ renderRows();}
+function onStats(d){
+ if(typeof d==='string'){try{d=JSON.parse(d)}catch(e){return}}
+ const need=d.need||1;
+ $('sLvl').textContent=d.lvl;$('sBar').style.width=Math.min(100,Math.round(d.exp/need*100))+'%';
+ $('sExp').textContent=d.exp+' / '+need;
+ $('sName').textContent=d.name;$('sId').textContent='['+d.id+'] '+(d.sex===1?'♂':'♀');
+ $('sSt').innerHTML=d.wanted>0?'<span class="red">В розыске: '+d.wanted+' зв.</span>':'Вы не в розыске';
+ $('sPhone').textContent=d.phone>0?d.phone:'нет';
+ $('sCash').textContent=money(d.cash);$('sBank').textContent=money(d.bank);
+ $('sOrg').textContent=d.org||'Отсутствует';$('sRank').textContent=d.org&&d.org!=='Нет'?d.rank:'—';
+ $('sJob').textContent=d.job||'Безработный';$('sFam').textContent=d.family||'Нет';
+ $('sVip').textContent=d.vip>0?('Уровень '+d.vip):'Нет';
+ $('sWarn').textContent=d.warn+' / 3';$('sAdm').textContent=d.admin>0?d.admin:'Нет';
+ myId=d.id;}
+
+document.addEventListener('keydown',e=>{
+ if(e.key==='Escape'){e.preventDefault();emit('tab:close','');if(!hasCef)console.log('close')}
+ else if(document.activeElement!==$('q')){
+  if(e.code==='KeyQ')openTab(cur-1);else if(e.code==='KeyE')openTab(cur+1)}});
+
+if(hasCef&&typeof cef.on==='function'){
+ cef.on('tab:players:data',onPlayers);cef.on('tab:stats:data',onStats);
+ emit('tab:ready','');
+}else{
+ $('demo').hidden=false;$('demo').textContent='ДЕМО-ДАННЫЕ. Связи с сервером нет. '+bridgeDiag();
+ const fake=[];for(let i=0;i<24;i++)fake.push({id:i,n:['Luis_Topovich','Kirill_Svagin','Viktor_Glebov','Ford_Gremory'][i%4]+(i>3?i:''),l:5+i*3%60,p:20+i*7%90});
+ onPlayers({page:0,total:60,size:24,online:60,me:0,rows:fake});
+ onStats({id:0,name:'Luis_Topovich',lvl:27,exp:5,need:108,sex:1,wanted:0,phone:5937,cash:230700,bank:0,org:'ФСБ',rank:3,job:'Нет',family:'Нет',vip:0,warn:0,admin:13});
+}
+openTab(0);
+</script>
+</body>
+</html>
