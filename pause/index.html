@@ -3,130 +3,82 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Absolute Online — Пауза</title>
+<title>Пауза</title>
 <style>
-:root{--c1:#d4380d;--c2:#7a1d08;--txt:#f2f2f5;--mut:#9a9aa6;--panel:#17171b;--line:#2a2a31}
+:root{--acc:#e8b04a;--acc2:#f5cf86;--txt:#fff;--mut:rgba(255,255,255,.62)}
 *{box-sizing:border-box;margin:0;padding:0}
-html,body{height:100%;background:rgba(6,6,8,.88);color:var(--txt);font-family:"Segoe UI",Roboto,Arial,sans-serif;overflow:hidden;user-select:none}
-.wrap{max-width:1216px;margin:32px auto 0;padding:0 24px}
-.head{border-radius:22px;padding:32px 44px 26px;background:linear-gradient(135deg,var(--c1),var(--c2));transition:background .35s;box-shadow:0 12px 40px #0008}
-.top{display:grid;grid-template-columns:1fr auto 1fr;align-items:start}
-.brand{font-weight:900;font-size:34px;letter-spacing:.03em;line-height:.95}
-.brand small{display:block;font-size:22px;font-style:italic;letter-spacing:.14em;color:#ffffffb0}
-.mid{text-align:center}
-.mid b{font-size:28px;letter-spacing:.05em}
-.mid small{display:block;color:#ffffffa0;font-size:13px;margin-top:3px}
-.info{text-align:right;font-size:12px;color:#ffffffb8;line-height:1.7}
-.info i{display:block;font-style:normal;letter-spacing:.12em;font-size:10px;opacity:.8}
-.menu{margin:26px auto 0;display:flex;width:max-content;max-width:100%;gap:4px;background:#00000040;border:1px solid #ffffff22;border-radius:40px;padding:5px}
-.menu button{background:none;border:0;color:#ffffffc8;font-size:14px;font-weight:600;letter-spacing:.06em;padding:11px 26px;border-radius:30px;cursor:pointer;text-transform:uppercase}
-.menu button:hover{background:#ffffff18}
-.menu button.on{background:#ffffff40;color:#fff}
-.body{margin:26px auto 0;max-width:735px}
-.row{display:flex;align-items:center;justify-content:space-between;padding:16px 22px;border-bottom:1px solid var(--line);font-size:14px}
-.list{background:var(--panel);border:1px solid var(--line);border-radius:14px;overflow:hidden}
-.row:last-child{border-bottom:0}
-.row small{color:var(--mut);margin-left:6px}
-.sw{width:50px;height:28px;border-radius:15px;background:#34343c;position:relative;cursor:pointer;transition:.2s}
-.sw::after{content:"";position:absolute;top:3px;left:3px;width:22px;height:22px;border-radius:50%;background:#fff;transition:.2s}
-.sw.on{background:var(--c1)}
-.sw.on::after{left:25px}
-input[type=range]{-webkit-appearance:none;width:170px;height:4px;background:#3a3a44;border-radius:3px;outline:none}
-input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:18px;height:18px;border-radius:50%;background:#fff;cursor:pointer}
-.val{min-width:34px;text-align:right;font-weight:700;margin-left:14px}
-.seg{display:flex;align-items:center;gap:8px}
-.seg button{width:30px;height:30px;border-radius:8px;border:0;background:#2a2a31;color:#fff;cursor:pointer}
-.seg span{min-width:150px;text-align:center;font-size:13px;font-weight:600;text-transform:uppercase}
-.big{display:flex;flex-direction:column;gap:10px;align-items:center}
-.big button{width:320px;padding:15px;border-radius:14px;border:1px solid var(--line);background:var(--panel);color:#fff;font-size:15px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;cursor:pointer}
-.big button:hover{border-color:#fff6}
-.big button.danger:hover{border-color:#ff4d5e;color:#ff8d98}
-.dbg{position:fixed;left:12px;bottom:10px;font-size:11px;color:#ffb766;max-width:80%}
-.note{text-align:center;color:var(--mut);font-size:12px;margin-top:16px}
-.confirm{position:fixed;inset:0;background:#000a;display:none;place-items:center}
+html,body{height:100%;background:rgba(0,0,0,.55);color:var(--txt);font-family:"Segoe UI",Roboto,Arial,sans-serif;overflow:hidden;user-select:none;cursor:default}
+.card{position:fixed;left:2.4%;right:2.4%;top:18px;border-radius:22px;padding:28px 46px 18px;
+ background:radial-gradient(520px 260px at 30% 0,rgba(214,160,40,.85),rgba(214,160,40,0) 70%),linear-gradient(90deg,#6b4f1d 0%,#2a2218 60%,#1b1b1b 100%);
+ box-shadow:0 18px 50px rgba(0,0,0,.55);animation:in .18s ease-out}
+@keyframes in{from{opacity:0;transform:translateY(-14px)}to{opacity:1;transform:none}}
+.logo{font-weight:900;font-size:34px;line-height:.9;letter-spacing:.02em}
+.logo small{display:block;color:rgba(255,255,255,.55);font-size:25px;letter-spacing:.1em}
+.mid{position:absolute;left:0;right:0;top:30px;text-align:center}
+.mid b{display:block;font-size:24px;font-weight:600;letter-spacing:.06em}
+.mid span{font-size:13px;color:var(--mut)}
+.mid i{display:block;font-style:normal;font-size:12px;color:var(--acc2);margin-top:4px}
+.sep{height:1px;background:rgba(255,255,255,.22);margin:58px 0 14px}
+.btns{display:flex;justify-content:center;gap:14px}
+.b{border:0;background:transparent;color:#fff;font-size:12px;letter-spacing:.06em;text-transform:uppercase;padding:11px 22px;border-radius:999px;cursor:pointer;transition:background .15s,color .15s}
+.b:hover{background:rgba(255,255,255,.16)}
+.b.main{background:#cdb88a;color:#2a2113;font-weight:600}
+.b.main:hover{background:#ddc998}
+.b.danger:hover{background:rgba(255,77,94,.35)}
+.b:disabled{opacity:.45;cursor:default}
+.foot{position:fixed;left:2.4%;right:2.4%;bottom:14px;height:50px;border-radius:18px;background:rgba(30,30,30,.9);border:1px solid rgba(255,255,255,.07);display:flex;justify-content:flex-end;align-items:center;gap:22px;padding:0 28px;font-size:11px;color:var(--mut);letter-spacing:.04em;text-transform:uppercase}
+.confirm{position:fixed;inset:0;display:none;place-items:center;background:rgba(0,0,0,.6)}
 .confirm.on{display:grid}
-.confirm div{background:var(--panel);border:1px solid var(--line);border-radius:16px;padding:26px 30px;text-align:center;width:360px}
-.confirm p{margin-bottom:18px;font-size:15px}
-.confirm button{padding:10px 22px;border-radius:10px;border:1px solid var(--line);background:#222228;color:#fff;cursor:pointer;margin:0 5px}
-.confirm button.d{background:#c0283a;border-color:#c0283a}
+.cbox{background:#1d1d22;border:1px solid #33333b;border-radius:16px;padding:26px 32px;text-align:center;min-width:340px}
+.cbox p{margin-bottom:18px;font-size:15px}
+.cbox .b{background:#2a2a31;margin:0 6px}
+.cbox .b.yes{background:var(--acc);color:#241a07;font-weight:600}
 </style>
 </head>
 <body>
-<div class="wrap">
-  <div class="head" id="head">
-    <div class="top">
-      <div class="brand">ABSOLUTE<small>ONLINE</small></div>
-      <div class="mid"><b id="mode">ПАУЗА</b><small id="timer">00:00</small></div>
-      <div class="info" id="info"><i>СЕРВЕР</i>Absolute Online</div>
-    </div>
-    <div class="menu" id="menu"></div>
+<div class="card">
+  <div class="logo">ABSOLUTE<small>ONLINE</small></div>
+  <div class="mid"><b id="title">ПАУЗА</b><span id="nick"></span><i id="sess">00:00</i></div>
+  <div class="sep"></div>
+  <div class="btns">
+    <button class="b main" id="bResume">Продолжить</button>
+    <button class="b" id="bSettings">Настройки</button>
+    <button class="b" id="bReconnect">Переподключиться</button>
+    <button class="b danger" id="bQuit">Выйти из игры</button>
   </div>
-  <div class="body" id="body"></div>
 </div>
-<div class="dbg" id="dbg" hidden></div>
-<div class="confirm" id="cf"><div><p>Выйти из игры? Вы будете отключены от сервера.</p><button id="no">Отмена</button><button class="d" id="yes">Выйти</button></div></div>
+<div class="foot"><span>Absolute Online</span><span>ESC — закрыть</span></div>
+<div class="confirm" id="cf"><div class="cbox"><p id="cfT"></p><button class="b yes" id="cfY">Да</button><button class="b" id="cfN">Отмена</button></div></div>
 <script>
-const $=id=>document.getElementById(id);
-function bridgeDiag(){try{const k=Object.getOwnPropertyNames(window).filter(n=>/cef|emit|lethal|bridge|engine|samp|native|external|query/i.test(n)).slice(0,12);return 'cef.emit: '+(typeof cef!=='undefined'&&cef&&typeof cef.emit==='function'?'есть':'НЕТ')+(k.length?' | найдено: '+k.join(', '):'')}catch(e){return 'diag error'}}
 const hasCef=typeof cef!=='undefined'&&cef&&typeof cef.emit==='function';
-const emit=(e,a)=>{if(hasCef)cef.emit(e,a==null?'':String(a))};
-const THEMES={main:['#d4380d','#7a1d08'],game:['#17b8b8','#0b5a62'],gfx:['#2f66d8','#16306e'],snd:['#a9b94a','#4e5a1a'],ctl:['#d11f7a','#6c0f45'],chat:['#6d28d9','#33106b']};
-const TABS=[['game','Геймплей'],['gfx','Графика'],['snd','Звук'],['ctl','Управление'],['chat','Чат']];
-/* [ключ, подпись, тип, значение по умолчанию, параметры] */
-const SET={
- game:[['rouletteNote','Уведомление о выдаче рулетки','sw',1],['crosshairAnim','Анимированный индикатор прицеливания','sw',1],['dmgIndicator','Индикатор получения урона','sw',1],['heavyFist','Heavy Fist','sw',0]],
- gfx:[['gpu','GPU-ускорение интерфейса','sw',1],['bright','Яркость','range',9,[0,30]],['fps','Ограничитель FPS (0 — выкл.)','range',0,[0,144]],['aa','Сглаживание','seg',0,['выключено','низкое','среднее','высокое']],['detail','Качество деталей','seg',0,['низкое','среднее','высокое']],['dist','Дальность прорисовки','range',187,[50,500]]],
- snd:[['sAmb','Окружение','range',9,[0,100]],['sGun','Стрельба','range',3,[0,100]],['hitSnd','Звук попадания по противнику','sw',1],['dmgSnd','Звук при получении урона','sw',1],['muteOthers','Отключить звук чужих выстрелов','sw',0],['bgMusic','Фоновое звуковое сопровождение','sw',1],['carAudio','Аудиосистемы транспорта и муз. центры','sw',1]],
- ctl:[['sens','Чувствительность','range',25,[1,100]],['invert','Инверсия мыши','sw',0],['flight','Управление полётом','sw',1],['camCenter','Авто-центрирование камеры в транспорте','sw',0]],
- chat:[['oocChat','Отображение OOC сообщений (/b)','sw',1],['factionChat','Сообщения фракции','seg',0,['все чаты','только важные','выключены']],['familyChat','Сообщения семьи','seg',0,['все чаты','только важные','выключены']],['adminActions','Отображение действий администрации','sw',1],['news','Отображение новостей','sw',1]]
-};
-let S={};try{S=JSON.parse(localStorage.getItem('ao_settings'))||{}}catch(e){}
-const save=()=>{try{localStorage.setItem('ao_settings',JSON.stringify(S))}catch(e){}};
-const get=(k,d)=>S[k]!==undefined?S[k]:d;
-let view='main';
+const emit=(e,a)=>{if(hasCef)cef.emit(e,a==null?'':String(a));else console.log('emit',e,a)};
+const $=id=>document.getElementById(id);
+let pending=null,t0=Date.now();
+const act=a=>emit('pause:action',a);
 
-function theme(k){const t=THEMES[k]||THEMES.main;const h=$('head').style;h.setProperty('--c1',t[0]);h.setProperty('--c2',t[1]);document.documentElement.style.setProperty('--c1',t[0]);
- $('head').style.background='linear-gradient(135deg,'+t[0]+','+t[1]+')'}
-function setMenu(){
- const m=$('menu');m.innerHTML='';
- if(view==='main'){
-  [['go','Продолжить'],['set','Настройки'],['exit','Выйти из игры']].forEach(([id,t])=>{const b=document.createElement('button');b.textContent=t;
-   b.onclick=()=>{if(id==='go')close();else if(id==='set')show('game');else $('cf').classList.add('on')};m.appendChild(b)});
- }else{
-  const back=document.createElement('button');back.textContent='‹ Назад';back.onclick=()=>show('main');m.appendChild(back);
-  TABS.forEach(([id,t])=>{const b=document.createElement('button');b.textContent=t;b.className=view===id?'on':'';b.onclick=()=>show(id);m.appendChild(b)});
- }}
-function show(v){view=v;theme(v);setMenu();const body=$('body');body.innerHTML='';
- if(v==='main'){body.innerHTML='<p class="note">Нажмите Esc, чтобы вернуться в игру.</p>';return}
- const list=document.createElement('div');list.className='list';
- SET[v].forEach(([k,lbl,type,def,opt])=>{
-  const row=document.createElement('div');row.className='row';const l=document.createElement('div');l.textContent=lbl;row.appendChild(l);
-  const val=get(k,def);
-  if(type==='sw'){const s=document.createElement('div');s.className='sw'+(val?' on':'');s.onclick=()=>{S[k]=get(k,def)?0:1;save();s.classList.toggle('on',!!S[k])};row.appendChild(s)}
-  if(type==='range'){const w=document.createElement('div');w.style.display='flex';w.style.alignItems='center';
-   const r=document.createElement('input');r.type='range';r.min=opt[0];r.max=opt[1];r.value=val;const n=document.createElement('span');n.className='val';n.textContent=val;
-   r.oninput=()=>{S[k]=+r.value;n.textContent=r.value;save()};w.appendChild(r);w.appendChild(n);row.appendChild(w)}
-  if(type==='seg'){const w=document.createElement('div');w.className='seg';const a=document.createElement('button');a.textContent='‹';const b=document.createElement('button');b.textContent='›';const sp=document.createElement('span');
-   let i=val;const up=()=>{sp.textContent=opt[i]};up();
-   a.onclick=()=>{i=(i+opt.length-1)%opt.length;S[k]=i;save();up()};b.onclick=()=>{i=(i+1)%opt.length;S[k]=i;save();up()};w.append(a,sp,b);row.appendChild(w)}
-  list.appendChild(row)});
- body.appendChild(list);
- const n=document.createElement('p');n.className='note';n.textContent='Настройки сохраняются в этом браузере. Часть параметров применяется только если их поддерживает клиент игры.';body.appendChild(n);}
+$('bResume').onclick=()=>act('resume');
+$('bSettings').onclick=()=>act('settings');
+function ask(text,a){pending=a;$('cfT').textContent=text;$('cf').classList.add('on')}
+$('bReconnect').onclick=()=>ask('Переподключиться к серверу?','reconnect');
+$('bQuit').onclick=()=>ask('Выйти из игры?','quit');
+$('cfN').onclick=()=>{pending=null;$('cf').classList.remove('on')};
+$('cfY').onclick=()=>{if(pending)act(pending);pending=null;$('cf').classList.remove('on')};
 
-function close(){emit('pause:close','')}
-$('no').onclick=()=>$('cf').classList.remove('on');
-$('yes').onclick=()=>{$('cf').classList.remove('on');emit('pause:exit','')};
-document.addEventListener('keydown',e=>{if(e.key==='Escape'){e.preventDefault();if($('cf').classList.contains('on'))$('cf').classList.remove('on');else if(view!=='main')show('main');else close()}});
+document.addEventListener('keydown',e=>{
+  if(e.key==='Escape'){e.preventDefault();
+    if($('cf').classList.contains('on')){$('cfN').click();return}
+    act('resume')}
+});
+document.addEventListener('contextmenu',e=>e.preventDefault());
 
-let t0=Date.now();setInterval(()=>{const s=Math.floor((Date.now()-t0)/1000);$('timer').textContent=String(Math.floor(s/60)).padStart(2,'0')+':'+String(s%60).padStart(2,'0')},1000);
-
-if(hasCef&&typeof cef.on==='function'){
- cef.on('pause:info',d=>{if(typeof d==='string'){try{d=JSON.parse(d)}catch(e){return}}
-  $('info').innerHTML='<i>ИГРОК</i>'+String(d.name).replace(/[<>&]/g,'')+' ['+d.id+']<i>СЕРВЕР</i>Absolute Online · онлайн '+d.online});
- emit('pause:ready','');
-}
-if(!hasCef){$('dbg').hidden=false;$('dbg').textContent='Связи с сервером нет. '+bridgeDiag()}
-show('main');
+// session timer (server may overwrite via pause:data)
+function tick(){const s=Math.floor((Date.now()-t0)/1000),m=Math.floor(s/60);
+  $('sess').textContent='В паузе: '+String(m).padStart(2,'0')+':'+String(s%60).padStart(2,'0')}
+setInterval(tick,1000);tick();
+function onData(d){if(typeof d==='string'){try{d=JSON.parse(d)}catch(e){return}}
+  if(d.name)$('nick').textContent=d.name+(d.id!=null?' ['+d.id+']':'')}
+if(hasCef&&typeof cef.on==='function'){cef.on('pause:data',onData);emit('pause:ready','')}
+else{onData({name:'Luis_Topovich',id:0})}
 </script>
 </body>
 </html>
