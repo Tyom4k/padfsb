@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Amazing Chat CEF</title>
+    <link rel="stylesheet" href="assets/chat.css">
+    <script src="assets/vue.js"></script>
+</head>
+<body>
+<div class="chat-wrap" :style="containerStyle" v-cloak>
+
+    <!-- Отдельный бокс в стиле PayDay / выписка -->
+    <transition name="fade">
+        <div class="payday-box" v-if="paydayBox.visible" :style="paydayStyle">
+            <div class="payday-header">
+                <span class="payday-title">{{ paydayBox.title }}</span>
+                <span class="payday-time">{{ paydayBox.time }}</span>
+            </div>
+            <div class="payday-rows">
+                <div v-for="(row, i) in paydayBox.rows" :key="i" class="payday-row">
+                    <span class="payday-label" :style="{ color: row.color || '#fff' }">{{ row.label }}</span>
+                    <span class="payday-value">{{ row.value }}</span>
+                </div>
+            </div>
+            <div class="payday-total" v-if="paydayBox.total">
+                <span>ИТОГО НА СЧЕТЕ</span>
+                <span class="total-amount">{{ paydayBox.total }}</span>
+            </div>
+            <div class="payday-footer" v-if="paydayBox.footer" v-html="paydayBox.footer"></div>
+        </div>
+    </transition>
+
+    <div class="chat-messages" ref="chatMessages" :style="chatStyle">
+        <div v-for="message in chatMessages"
+             :key="message.id"
+             class="chat-message"
+             :style="{ fontWeight: settings.fontWeight }"
+             :class="{ fading: message.fading }">
+            <span class="msg-time" :style="{ color: '#' + message.color }" v-if="settings.showTime">{{ message.time }}</span>
+            <span class="badge-x2" v-if="message.count > 1">x{{ message.count }}</span>
+            <span class="msg-text-content" v-html="message.text"></span>
+        </div>
+    </div>
+
+    <div class="input-row glass" v-show="chatShowInput">
+        <input id="chat-input"
+               type="text"
+               v-model="chatInput"
+               @input="filterCommands"
+               @keydown="handleKeyDown"
+               spellcheck="false"
+               autocomplete="off"
+               placeholder="">
+        <div class="input-actions">
+            <span class="gear-btn" @click="chatShowSettings = !chatShowSettings">⚙</span>
+            <span class="lang-ind">{{ lang }}</span>
+        </div>
+    </div>
+
+    <!-- Подсказки -->
+    <div class="hints-area glass" v-if="chatShowInput && settings.showHints && showHintsBox">
+        <template v-if="!currentActiveCommand">
+            <div v-for="(cmd, index) in chatFilteredCommands"
+                 :key="cmd.name"
+                 class="hint-row"
+                 :class="{ 'hint-selected': selectedHintIndex === index }"
+                 @click="selectCommand(cmd.name)"
+                 @mouseenter="selectedHintIndex = index">
+                <div class="cmd-badge" :class="cmd.isAdmin ? 'admin-cmd' : 'user-cmd'">{{ cmd.name }}</div>
+                <div class="cmd-args-list" v-if="settings.showArgs && cmd.args">
+                    <div v-for="arg in cmd.args" :key="arg.name" class="arg-item">{{ arg.name }}</div>
+                </div>
+                <span v-else-if="cmd.desc" class="hint-desc">{{ cmd.desc }}</span>
+            </div>
+        </template>
+        <template v-else-if="currentActiveCommand">
+            <div class="hint-row active-cmd-row">
+                <div class="cmd-badge" :class="currentActiveCommand.isAdmin ? 'admin-cmd' : 'user-cmd'">
+                    {{ currentActiveCommand.name }}
+                </div>
+                <div class="cmd-args-list" v-if="settings.showArgs && currentActiveCommand.args">
+                    <div v-for="(arg, index) in currentActiveCommand.args"
+                         :key="index"
+                         class="arg-item"
+                         :class="{ 'arg-active': getCurrentArgIndex() === index, 'arg-filled': getArgValue(index) !== null }">
+                        <template v-if="getArgValue(index) !== null">
+                            {{ arg.name }}: <span class="arg-value">{{ getArgValue(index) }}</span>
+                        </template>
+                        <template v-else>
+                            {{ arg.name }}
+                        </template>
+                    </div>
+                </div>
+                <span v-else-if="currentActiveCommand.desc" class="hint-desc">{{ currentActiveCommand.desc }}</span>
+            </div>
+            <div class="options-list" v-if="currentArgOptions && currentArgOptions.length > 0">
+                <div v-for="(opt, index) in currentArgOptions"
+                     :key="opt.value"
+                     class="opt-row"
+                     :class="{ 'opt-selected': selectedHintIndex === index }"
+                     @click="selectOption(opt.name)"
+                     @mouseenter="selectedHintIndex = index">
+                    <span class="opt-val">{{ opt.value }}</span>
+                    <span class="opt-name">{{ opt.name }}</span>
+                </div>
+            </div>
+        </template>
+    </div>
+
+    <!-- Настройки (стекло + секции как на скрине) -->
+    <transition name="fade">
+        <div class="settings-modal glass" v-if="chatShowSettings">
+            <div class="settings-header">
+                <span>⚙ Настройки чата</span>
+                <span class="close-settings" @click="chatShowSettings = false">✕</span>
+            </div>
+
+            <div class="settings-sections">
+                <!-- ОСНОВНЫЕ -->
+                <div class="settings-section">
+                    <div class="section-title">ОСНОВНЫЕ</div>
+                    <label class="toggle-row">
+                        <span>Показывать подсказки команд</span>
+                        <input type="checkbox" v-model="settings.showHints" @change="saveSettings">
+                        <span class="toggle-slider"></span>
+                    </label>
+                    <label class="toggle-row">
+                        <span>Показывать аргументы команд</span>
+                        <input type="checkbox" v-model="settings.showArgs" @change="saveSettings">
+                        <span class="toggle-slider"></span>
+                    </label>
+                    <label class="toggle-row">
+                        <span>Авто-скролл чата до последнего сообщения, когда открыт</span>
+                        <input type="checkbox" v-model="settings.autoScroll" @change="saveSettings">
+                        <span class="toggle-slider"></span>
+                    </label>
+                    <label class="toggle-row">
+                        <span>Показывать время сообщений</span>
+                        <input type="checkbox" v-model="settings.showTime" @change="saveSettings">
+                        <span class="toggle-slider"></span>
+                    </label>
+                    <label class="toggle-row">
+                        <span>Сохранять сообщения между сессиями</span>
+                        <input type="checkbox" v-model="settings.saveMessages" @change="saveSettings">
+                        <span class="toggle-slider"></span>
+                    </label>
+                </div>
+
+                <!-- ВНЕШНИЙ ВИД -->
+                <div class="settings-section">
+                    <div class="section-title">ВНЕШНИЙ ВИД</div>
+                    <div class="slider-group">
+                        <div class="slider-label">Высота чата <span>{{ settings.chatHeight }}</span></div>
+                        <input type="range" min="8" max="50" v-model.number="settings.chatHeight" @input="saveSettings">
+                    </div>
+                    <div class="slider-group">
+                        <div class="slider-label">Отступ между сообщениями <span>{{ settings.msgGap }}</span></div>
+                        <input type="range" min="0" max="12" v-model.number="settings.msgGap" @input="saveSettings">
+                    </div>
+                    <div class="select-group">
+                        <div class="slider-label">Шрифт</div>
+                        <div class="custom-select" @click="fontDropdownOpen = !fontDropdownOpen">
+                            <span>{{ settings.fontFamily }}</span>
+                            <div class="dropdown-list" v-if="fontDropdownOpen">
+                                <div v-for="font in fontList" :key="font" class="dropdown-item" @click.stop="selectFont(font)">{{ font }}</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="slider-group">
+                        <div class="slider-label">Размер шрифта <span>{{ settings.fontSize }}</span></div>
+                        <input type="range" min="10" max="24" v-model.number="settings.fontSize" @input="saveSettings">
+                    </div>
+                    <div class="slider-group">
+                        <div class="slider-label">Жирность шрифта <span>{{ settings.fontWeight }}</span></div>
+                        <input type="range" min="100" max="900" step="100" v-model="settings.fontWeight" @input="saveSettings">
+                    </div>
+                    <div class="slider-group">
+                        <div class="slider-label">Тень текста сообщений</div>
+                        <select v-model="settings.textShadow" @change="saveSettings" class="glass-select">
+                            <option value="always">Всегда</option>
+                            <option value="open">Только когда открыт</option>
+                            <option value="never">Никогда</option>
+                        </select>
+                    </div>
+                    <div class="slider-group">
+                        <div class="slider-label">Фон при открытом чате <span>{{ Math.round(settings.bgOpen * 100) }}%</span></div>
+                        <input type="range" min="0" max="1" step="0.05" v-model.number="settings.bgOpen" @input="saveSettings">
+                    </div>
+                    <div class="slider-group">
+                        <div class="slider-label">Фон при закрытом чате <span>{{ Math.round(settings.bgClosed * 100) }}%</span></div>
+                        <input type="range" min="0" max="0.6" step="0.05" v-model.number="settings.bgClosed" @input="saveSettings">
+                    </div>
+                    <div class="slider-group">
+                        <div class="slider-label">Размытие фона <span>{{ settings.blur }}%</span></div>
+                        <input type="range" min="0" max="40" v-model.number="settings.blur" @input="saveSettings">
+                    </div>
+                    <label class="toggle-row">
+                        <span>Анимация чата</span>
+                        <input type="checkbox" v-model="settings.animations" @change="saveSettings">
+                        <span class="toggle-slider"></span>
+                    </label>
+                </div>
+
+                <!-- ПОВЕДЕНИЕ ЧАТА -->
+                <div class="settings-section">
+                    <div class="section-title">ПОВЕДЕНИЕ ЧАТА</div>
+                    <div class="slider-group">
+                        <div class="slider-label">Авто-скрытие чата <span>{{ settings.autoHide ? settings.autoHideTime + 'с' : 'OFF' }}</span></div>
+                        <input type="range" min="0" max="15" v-model.number="settings.autoHideTime" @input="onAutoHideChange">
+                    </div>
+                    <div class="slider-group">
+                        <div class="slider-label">Прозрачность чата при бездействии <span>{{ settings.autoOpacity ? Math.round(settings.idleOpacity * 100) + '%' : 'OFF' }}</span></div>
+                        <input type="range" min="0" max="1" step="0.05" v-model.number="settings.idleOpacity" @input="onIdleOpacityChange">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </transition>
+</div>
+<script src="assets/chat.js"></script>
+</body>
+</html>
