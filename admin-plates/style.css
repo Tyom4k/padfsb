@@ -1,0 +1,167 @@
+@font-face {
+  font-family: "CarPlate";
+  src: url("../../amazing/fonts/CarPlateRU.ttf") format("truetype");
+  font-display: swap;
+}
+
+* { box-sizing: border-box; user-select: none; }
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  display: grid;
+  place-items: center;
+  overflow: hidden;
+  color: #fff;
+  font-family: "Segoe UI", Arial, sans-serif;
+  background: radial-gradient(circle at 50% 35%, rgba(255, 143, 0, .12), transparent 38%), rgba(3, 4, 7, .72);
+}
+
+.panel {
+  position: relative;
+  width: min(720px, 88vw);
+  padding: 34px 38px 32px;
+  border: 1px solid rgba(255, 255, 255, .1);
+  border-radius: 22px;
+  background: linear-gradient(150deg, rgba(27, 28, 31, .99), rgba(8, 9, 11, .99));
+  box-shadow: 0 30px 100px rgba(0, 0, 0, .66), inset 0 1px 0 rgba(255, 255, 255, .04);
+}
+
+.panel::before {
+  content: "";
+  position: absolute;
+  inset: 0 auto auto 0;
+  width: 170px;
+  height: 4px;
+  border-radius: 22px 0 8px;
+  background: linear-gradient(90deg, #ff7a00, #ffb02e);
+}
+
+.eyebrow {
+  margin: 0 0 8px;
+  color: #ff9825;
+  font-size: 12px;
+  font-weight: 900;
+  letter-spacing: .18em;
+}
+
+h1 { margin: 0; font-size: 29px; line-height: 1.15; }
+.description { max-width: 590px; margin: 13px 0 25px; color: #a8aaae; font-size: 14px; line-height: 1.55; }
+
+button { font: inherit; cursor: pointer; }
+.close {
+  position: absolute;
+  top: 20px;
+  right: 22px;
+  width: 40px;
+  height: 40px;
+  padding: 0 0 4px;
+  border: 1px solid rgba(255, 255, 255, .1);
+  border-radius: 11px;
+  color: #c8c9cc;
+  font-size: 29px;
+  line-height: 1;
+  background: rgba(255, 255, 255, .055);
+}
+
+.preview {
+  display: grid;
+  place-items: center;
+  min-height: 185px;
+  margin-bottom: 23px;
+  border: 1px solid rgba(255, 255, 255, .07);
+  border-radius: 16px;
+  background: radial-gradient(circle, rgba(255, 255, 255, .055), rgba(255, 255, 255, .012));
+}
+
+.amazing-frame {
+  position: relative;
+  width: min(512px, 78vw);
+  aspect-ratio: 4 / 1;
+  display: grid;
+  place-items: center;
+  background: url("assets/color-0.png") center / 100% 100% no-repeat;
+  filter: drop-shadow(0 12px 18px rgba(0, 0, 0, .45));
+}
+
+.state-plate {
+  position: absolute;
+  left: 6.8%;
+  top: 15%;
+  width: 86.4%;
+  height: 55%;
+  display: flex;
+  align-items: center;
+  overflow: hidden;
+  color: #111;
+  border: 2px solid #1b1b1b;
+  border-radius: 7px;
+  background: linear-gradient(#fff, #e8e8e5);
+  box-shadow: inset 0 0 0 2px rgba(255, 255, 255, .8);
+}
+
+.main-number {
+  flex: 1;
+  padding-left: 6%;
+  text-align: center;
+  font-family: "CarPlate", "Arial Narrow", sans-serif;
+  font-size: clamp(31px, 3.35vw, 48px);
+  line-height: 1;
+  letter-spacing: .075em;
+  white-space: nowrap;
+}
+
+.region {
+  align-self: stretch;
+  width: 24%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  border-left: 2px solid #222;
+}
+
+.region b { font: 800 clamp(20px, 2.15vw, 31px)/1 Arial, sans-serif; }
+.region small { margin-top: 2px; font: 800 clamp(7px, .7vw, 10px)/1 Arial, sans-serif; letter-spacing: .18em; }
+
+.field > span { display: block; margin-bottom: 9px; font-size: 13px; font-weight: 800; }
+.input-row { display: flex; gap: 10px; }
+
+input {
+  min-width: 0;
+  flex: 1;
+  height: 50px;
+  padding: 0 17px;
+  color: #fff;
+  outline: none;
+  border: 1px solid rgba(255, 255, 255, .12);
+  border-radius: 11px;
+  background: #111317;
+  font: 800 19px/1 "Segoe UI", sans-serif;
+  letter-spacing: .12em;
+  text-transform: uppercase;
+  user-select: text;
+}
+
+input:focus { border-color: #ff9825; box-shadow: 0 0 0 3px rgba(255, 152, 37, .1); }
+.field small { display: block; margin-top: 8px; color: #85888e; font-size: 11px; line-height: 1.45; }
+
+.random, .cancel, .apply {
+  min-height: 46px;
+  padding: 0 19px;
+  border-radius: 11px;
+  font-weight: 800;
+}
+
+.random, .cancel { color: #e4e4e5; border: 1px solid rgba(255, 255, 255, .12); background: rgba(255, 255, 255, .055); }
+.apply { color: #171009; border: 0; background: linear-gradient(135deg, #ffb132, #ff7900); box-shadow: 0 8px 22px rgba(255, 124, 0, .22); }
+button:hover { filter: brightness(1.12); }
+
+.error { min-height: 18px; margin: 10px 0 0; color: #ff6565; font-size: 12px; }
+footer { display: flex; justify-content: flex-end; gap: 10px; margin-top: 12px; }
+
+@media (max-width: 650px) {
+  .panel { padding: 28px 22px 24px; }
+  .input-row { flex-direction: column; }
+  .preview { min-height: 145px; }
+}

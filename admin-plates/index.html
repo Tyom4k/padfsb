@@ -1,0 +1,44 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Выдача госномера</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <main class="panel" role="dialog" aria-modal="true" aria-labelledby="title">
+    <button class="close" type="button" aria-label="Закрыть">×</button>
+
+    <p class="eyebrow">УПРАВЛЕНИЕ ТРАНСПОРТОМ</p>
+    <h1 id="title">Выдать государственный номер</h1>
+    <p class="description">Введите номер вручную или нажмите «Случайный». Номер сразу появится на автомобиле и будет виден всем игрокам.</p>
+
+    <section class="preview" aria-label="Предпросмотр номера">
+      <div class="amazing-frame">
+        <div class="state-plate">
+          <span class="main-number" id="preview-main">T437YY</span>
+          <span class="region"><b id="preview-region">58</b><small>RUS</small></span>
+        </div>
+      </div>
+    </section>
+
+    <label class="field" for="plate-input">
+      <span>Номер автомобиля</span>
+      <div class="input-row">
+        <input id="plate-input" maxlength="9" autocomplete="off" spellcheck="false" value="T437YY58" placeholder="T437YY58">
+        <button class="random" type="button">Случайный</button>
+      </div>
+      <small>Формат: T437YY или T437YY58. Если регион не указан, автоматически ставится 58.</small>
+    </label>
+
+    <p class="error" aria-live="polite"></p>
+
+    <footer>
+      <button class="cancel" type="button">Отмена</button>
+      <button class="apply" type="button">Установить номер</button>
+    </footer>
+  </main>
+  <script src="app.js"></script>
+</body>
+</html>

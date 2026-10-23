@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="css/auth.css?v=20260901-responsive">
+</head>
+<body id="amz-portal" style="display:block">
+    <div id="amz-connect-screen" class="amz-connect-screen">
+        <div class="amz-connect-pill">
+            <span class="amz-connect-dots"><i></i><i></i><i></i></span>
+            <span>Подключение к серверу</span>
+        </div>
+    </div>
+
+    <div id="amz-auth-content" class="amz-auth-content" hidden>
+    <div class="amz-left-features">
+        <div class="amz-feature-card">
+            <div class="amz-f-icon" style="background-color: #4CAF50;">
+                <img src="images/two-people-action-fill.svg" alt="icon">
+            </div>
+            <div class="amz-f-text">
+                <span class="amz-f-title">Самая адекватная</span>
+                <span class="amz-f-sub">аудитория</span>
+            </div>
+        </div>
+        <div class="amz-feature-card">
+            <div class="amz-f-icon" style="background-color: #FF5722;">
+                <img src="images/handshake-fill.svg" alt="icon">
+            </div>
+            <div class="amz-f-text">
+                <span class="amz-f-title">Игроки из разных</span>
+                <span class="amz-f-sub">стран и городов</span>
+            </div>
+        </div>
+        <div class="amz-feature-card">
+            <div class="amz-f-icon" style="background-color: #FFC107;">
+                <img src="images/smile-fill.svg" alt="icon">
+            </div>
+            <div class="amz-f-text">
+                <span class="amz-f-title">Удивительная</span>
+                <span class="amz-f-sub">атмосфера</span>
+            </div>
+        </div>
+        <div class="amz-feature-card">
+            <div class="amz-f-icon" style="background-color: #03A9F4;">
+                <img src="images/two-people-action-fill.svg" alt="icon">
+            </div>
+            <div class="amz-f-text">
+                <span class="amz-f-title">Открытый</span>
+                <span class="amz-f-sub">и свободный мир</span>
+            </div>
+        </div>
+        <div class="amz-feature-card">
+            <div class="amz-f-icon" style="background-color: #FF9800;">
+                <img src="images/microphone-fill.svg" alt="icon">
+            </div>
+            <div class="amz-f-text">
+                <span class="amz-f-title">Удобный</span>
+                <span class="amz-f-sub">голосовой чат</span>
+            </div>
+        </div>
+    </div>
+
+    <div class="amz-support-card">
+        <span class="amz-support-icon">&#9679;</span>
+        <span><b>Техническая поддержка</b><small>Доступна через администрацию</small></span>
+        <strong>&#8599;</strong>
+    </div>
+
+    <div class="amz-full-screen">
+        <div class="amz-box-main">
+            <div class="amz-tabs-v4">
+                <div id="tab-auth" class="amz-t-btn amz-t-active" onclick="switchMainTab('auth')">
+                    <span class="amz-t-txt">АВТОРИЗАЦИЯ</span>
+                    <span class="amz-t-sub">Есть персонаж</span>
+                </div>
+                <div id="tab-reg" class="amz-t-btn amz-t-dark" onclick="switchMainTab('reg')">
+                    <span class="amz-t-txt">РЕГИСТРАЦИЯ</span>
+                    <span class="amz-t-sub">Новый персонаж</span>
+                </div>
+            </div>
+
+            <div class="amz-inner-v4">
+                <div class="amz-vector-bg" style="background-image: url('images/form-background-vector--top.svg');"></div>
+
+                <div class="amz-wordmark amz-logo-v4" aria-label="Absolute Online">
+                    <span class="amz-wordmark-top">Absolute</span>
+                    <span class="amz-wordmark-bottom">Online</span>
+                </div>
+                
+                <h1 id="amz-title" class="amz-title-v4">Авторизация</h1>
+
+                <div id="amz-status-bar" class="amz-status-bar">
+                    <div id="srv-badge" class="amz-badge-v4 amz-badge-none">SERVER</div>
+                    <div id="usr-badge" class="amz-badge-v4 amz-badge-usr">Nickname</div>
+                </div>
+
+                <div class="amz-form-v4" id="amz-form-container">
+                </div>
+            </div>
+        </div>
+    </div>
+    </div>
+
+    <div id="amz-toast" class="amz-toast" role="alert"></div>
+
+    <div id="ingame-hud" hidden></div>
+    <script src="script/auth.js?v=20260830-no-dup-hud"></script>
+</body>
+</html>

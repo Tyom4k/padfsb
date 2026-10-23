@@ -1,0 +1,63 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="css/spawn.css">
+</head>
+<body>
+  <main class="spawn-map">
+    <div class="map-viewport" id="map-view">
+      <div class="map-world" id="map-world">
+        <img class="sa-map" id="sa-map-img" src="images/sa-map.png" alt="" draggable="false" onerror="this.style.display='none'">
+        <svg class="sa-map sa-map-fallback" viewBox="0 0 6000 6000" preserveAspectRatio="none" aria-hidden="true">
+          <defs>
+            <linearGradient id="water" x1="0" y1="0" x2="1" y2="1">
+              <stop offset="0%" stop-color="#16324a"/>
+              <stop offset="100%" stop-color="#0d2234"/>
+            </linearGradient>
+            <linearGradient id="land" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0%" stop-color="#2a3340"/>
+              <stop offset="100%" stop-color="#1b222c"/>
+            </linearGradient>
+          </defs>
+          <rect width="6000" height="6000" fill="url(#water)"/>
+          <!-- San Fierro / west -->
+          <path fill="url(#land)" d="M420 1680 C380 2100 520 2580 860 2860 C1180 3120 1320 3480 1180 3920 C980 4380 1280 4720 1680 4580 C2040 4460 2140 4020 1980 3620 C1840 3260 1960 2860 1780 2480 C1620 2140 1280 1860 860 1760 C620 1700 460 1560 420 1680Z"/>
+          <!-- Bone County / desert -->
+          <path fill="url(#land)" d="M1680 980 C2100 720 2680 640 3220 780 C3780 940 4120 1280 4280 1680 C4460 2140 4220 2520 3780 2680 C3280 2860 2720 2740 2280 2460 C1860 2200 1560 1680 1680 980Z"/>
+          <!-- Las Venturas -->
+          <path fill="url(#land)" d="M3680 640 C4120 480 4680 520 5080 780 C5420 1000 5560 1380 5460 1760 C5340 2160 4920 2380 4520 2320 C4120 2260 3840 1960 3720 1540 C3620 1180 3480 780 3680 640Z"/>
+          <!-- Los Santos -->
+          <path fill="url(#land)" d="M3180 3180 C3620 3040 4180 3120 4580 3440 C4980 3760 5280 4280 5120 4780 C4940 5280 4380 5480 3920 5360 C3460 5240 3180 4860 3040 4440 C2900 4020 2860 3520 3180 3180Z"/>
+          <!-- Red County bridge land -->
+          <path fill="url(#land)" d="M2480 2860 C2860 2740 3240 2860 3480 3140 C3360 3380 2980 3520 2640 3400 C2360 3280 2280 3000 2480 2860Z"/>
+          <g fill="none" stroke="#8ea0b4" stroke-width="18" opacity=".35">
+            <path d="M980 2480 C1680 2320 2480 2680 3180 3380 C3680 3920 4280 4380 4780 4680"/>
+            <path d="M1980 1260 C2480 1680 2860 2280 3180 3180"/>
+            <path d="M4280 980 C4380 1680 4480 2480 4580 3440"/>
+            <path d="M860 2860 C1480 3180 1980 3620 2480 4080"/>
+          </g>
+          <g fill="#c9d4e0" font-size="120" font-family="Arial, sans-serif" letter-spacing="6" opacity=".55">
+            <text x="4300" y="1180">LAS VENTURAS</text>
+            <text x="720" y="2680">SAN FIERRO</text>
+            <text x="3680" y="4280">LOS SANTOS</text>
+          </g>
+        </svg>
+        <button type="button" id="marker-last" class="marker marker-last" hidden title="Последнее место"></button>
+        <button type="button" id="marker-org" class="marker marker-org" hidden title="Организация"></button>
+        <div id="marker-default" class="marker marker-default" hidden title="Место по умолчанию"></div>
+      </div>
+    </div>
+    <section class="spawn-card">
+      <div class="brand">Absolute Online</div>
+      <h1>Выбор места появления</h1>
+      <p>Выберите, откуда продолжить игру</p>
+      <div id="options" class="options"></div>
+      <button id="start" type="button">Начать игру</button>
+    </section>
+    <div class="support"><b>● Техническая поддержка</b><span>Ответим на ваши вопросы</span></div>
+  </main>
+  <script src="script/spawn.js"></script>
+</body>
+</html>
