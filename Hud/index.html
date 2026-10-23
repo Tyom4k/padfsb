@@ -1,0 +1,255 @@
+<head>
+    <title>Amazing online</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <link rel="stylesheet" href="assets/css/hud.css">
+    <link rel="stylesheet" href="assets/css/speedometer.css">
+    <link rel="stylesheet" href="assets/css/dialogs.css">
+    <link rel="stylesheet" href="assets/css/vehicle-audio.css?v=144">
+    <link rel="stylesheet" href="assets/css/vehicle-tint.css?v=161">
+    <link rel="stylesheet" href="assets/css/old-radial.css?v=14272">
+    <link rel="stylesheet" type="text/css" href="assets/css/stylesheet.css">
+    <link rel="stylesheet" href="assets/css/bootstrap-5.0.0-alpha1.min.css">
+    <link rel="stylesheet" href="assets/css/responsive.css">
+    <link rel="stylesheet" href="assets/css/esc-menu.css?v=14363">
+    <link rel="stylesheet" href="assets/css/f2-settings.css?v=14363">
+    <link rel="preload" href="assets/css/fonts/ProximaNova-Bold.ttf" as="font" type="font/ttf" crossorigin>
+</head>
+<style>
+    body { margin: 0; padding: 0; overflow: hidden; background: transparent; }
+</style>
+<body>
+    <div id="admin-spec-root" style="display:none"></div>
+    <iframe id="spec-chat-frame" src="chat/index.html?v=1" title="Игровой чат"
+      style="display:none;position:fixed;inset:0;width:100vw;height:100vh;border:0;z-index:2147483001;pointer-events:none;background:transparent"></iframe>
+    <template id="admin-spec-template">
+      <main class="cef-root" id="cefRoot">
+        <aside class="info-panel" id="infoPanel">
+          <h1 title="Зажми и перетащи, чтобы переместить">ИНФОРМАЦИЯ <span class="drag-hint">⠿</span></h1>
+          <div class="rows">
+            <div class="row"><span>Здоровье</span><b id="hp">0</b></div>
+            <div class="row"><span>Броня</span><b id="armor">0</b></div>
+            <div class="row"><span>Уровень</span><b id="level">0</b></div>
+          </div>
+          <div class="rows split">
+            <div class="row"><span>Фракция</span><b id="fraction">Гражданский</b></div>
+            <div class="row"><span>Семья</span><b id="family">Нет</b></div>
+          </div>
+          <div class="rows split">
+            <div class="row"><span>Транспорт</span><b id="vehicle">Нет</b></div>
+            <div class="row"><span>Розыск</span><b id="wanted">0</b></div>
+            <div class="row"><span>Зеленая зона</span><b class="green" id="greenZone">Да</b></div>
+            <div class="row"><span>Виртуальный мир</span><b class="blue" id="virtualWorld">0</b></div>
+            <div class="row"><span>Скорость</span><b><span id="speed">0</span> км/ч</b></div>
+          </div>
+          <div class="rows split compact">
+            <div class="row"><span>FPS</span><b class="green" id="fps">0</b></div>
+            <div class="row"><span>Соединение</span><b class="red" id="ping">0</b></div>
+          </div>
+          <div class="player-filter"><span>Все игроки</span><b>⌄</b></div>
+          <button class="hide-info" id="hideInfo" type="button">СКРЫТЬ ИНФО (CTRL)</button>
+        </aside>
+        <section class="command-dock with-name" id="commandDock" aria-label="Команды администратора">
+          <div class="target-name"><span id="playerName">Savelii_Kentry</span> [<span id="playerId">717</span>] <span class="role-badge role-player" id="playerRole">Игрок</span></div>
+          <div class="dock-row">
+            <div class="button-grid" id="buttonGrid">
+              <button class="cmd green" data-action="move">MOVE</button>
+              <button class="cmd green" data-action="flip">FLIP</button>
+              <button class="cmd green" data-action="gruz">GRUZ</button>
+              <button class="cmd orange" data-action="nexuz">NEXUZ</button>
+              <button class="cmd orange" data-action="getinfo">GETINFO</button>
+              <button class="cmd blue" data-action="up">UP</button>
+              <button class="cmd blue" data-action="down">DOWN</button>
+              <button class="cmd red extra" data-action="freeze">FREEZE</button>
+              <button class="cmd brown extra" data-action="nick">NICK</button>
+              <button class="cmd red extra" data-action="delgun">DELGUN</button>
+              <button class="cmd brown extra infopunish" data-action="infopunish">INFOPUNISH</button>
+              <button class="cmd brown extra" data-action="time">TIME</button>
+              <button class="cmd blue extra" data-action="goto">GOTO</button>
+              <button class="cmd blue extra" data-action="spawn">SPAWN</button>
+              <button class="cmd red extra" data-action="pg">PG</button>
+              <button class="cmd blue extra" data-action="exit">EXIT</button>
+            </div>
+            <div class="dock-tools">
+              <button id="expandButton" class="tool info-tool" title="Свернуть или развернуть команды" aria-label="Свернуть или развернуть команды"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 11v5"/><path d="M12 8h.01"/></svg></button>
+              <button id="closeButton" class="tool exit-tool" title="Закрыть панель" aria-label="Закрыть панель"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M14 3h5a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-5"/><path d="M10 17l5-5-5-5M15 12H3"/></svg></button>
+            </div>
+          </div>
+        </section>
+        <div class="toast" id="toast" role="status"></div>
+      </main>
+      <button class="reopen" id="reopenButton">ОТКРЫТЬ СПЕК</button>
+    </template>
+    <div class="amazing-main-hud-block">
+        <div class="hud-top">
+            <div class="pill pill-time"><b>{{ currentTime }}</b><span class="dot">&middot;</span><span class="muted">{{ currentDate }}</span></div>
+            <div class="pill pill-name"><span class="pname">{{ getInterface() }}</span><span class="idbadge" :class="idClass">{{ id }}</span></div>
+        </div>
+        <div class="hud-logo"><span class="l1">ABSOLUTE</span><span class="l2">online</span></div>
+        <div class="hud-bottom">
+            <div class="hud-weapon" v-if="weapon > 0">
+                <img :src="`assets/images/weapons/${weapon}.png`" @error="$event.target.style.display='none'" />
+                <div class="pill pill-ammo" v-if="isWeaponFire"><b>{{ ammoNow }}</b><span class="muted">/{{ ammoLeft }}</span><i class="round gray"><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" d="M7 9a3 3 0 1 0 0 6c3 0 7-6 10-6a3 3 0 1 1 0 6c-3 0-7-6-10-6z"/></svg></i></div>
+            </div>
+            <div class="hud-stats">
+                <div class="pill pill-stat pill-wanted" v-if="wanted > 0"><b>{{ wanted }}</b><i class="round amber"><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12 2.5l2.9 6 6.6.9-4.8 4.6 1.2 6.5L12 17.4l-5.9 3.1 1.2-6.5L2.5 9.4l6.6-.9z"/></svg></i></div>
+                <div class="pill pill-stat pill-armour"><b>{{ armour }}</b><i class="round white"><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12 2l8 3v6c0 5-3.4 9.4-8 11-4.6-1.6-8-6-8-11V5z"/></svg></i></div>
+                <div class="pill pill-stat pill-health"><b>{{ health }}</b><div class="bar"><i :style="{ width: healthPercent + '%' }"></i></div><i class="round red"><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12 21s-8-5.2-8-11a4.5 4.5 0 0 1 8-2.8A4.5 4.5 0 0 1 20 10c0 5.8-8 11-8 11z"/></svg></i></div>
+                <div class="pill pill-stat pill-money"><b>{{ formatNumber(money) }}</b><i class="round green"><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M3 7a3 3 0 0 1 3-3h12v3H6a1 1 0 0 0 0 2h14v10a2 2 0 0 1-2 2H6a3 3 0 0 1-3-3z"/><circle cx="16.5" cy="14.5" r="1.5" fill="#1f9d4f"/></svg></i></div>
+            </div>
+        </div>
+    </div>
+    <div class="speedometer">
+        <div class="wrapper">
+          <div class="backdrop"></div>
+          <!-- Speed Scale -->
+          <div class="speed-scale">
+            <svg class="scale__background" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 1000">
+              <path d="m112.91,781.06l-13.64,9.85c-2.27,1.52-3.03,4.92-1.14,7.2,1.52,2.27,4.92,3.03,7.2,1.14l13.26-10.23c2.27-1.52,2.65-4.55,1.14-6.82-1.52-2.27-4.55-2.65-6.82-1.14Z" />
+              <path d="m120.87,708.71l-53.79,29.55c-3.41,1.52-4.55,5.68-2.65,9.09,1.89,3.03,6.06,4.17,9.47,2.27l52.65-30.68c3.03-1.52,3.79-5.3,2.27-7.95s-5.3-3.79-7.95-2.27Z" />
+              <path d="m64.05,685.61c-1.14-2.65-3.79-3.79-6.44-2.65l-15.53,6.44c-2.65,1.14-3.79,4.17-2.65,6.82,1.14,2.65,4.17,3.79,6.82,2.65l15.15-6.82c2.65-1.14,3.79-3.79,2.65-6.44Z" />
+              <path d="m90.94,621.59c-.76-3.41-4.17-4.92-7.2-4.17l-59.09,16.67c-3.41.76-5.68,4.55-4.55,8.33.76,3.79,4.55,5.68,8.33,4.55l58.71-18.18c3.03-.76,4.55-4.17,3.79-7.2Z" />
+              <path d="m32.61,578.41c-.38-2.65-3.03-4.55-5.68-4.17l-16.67,2.65c-2.65.38-4.55,3.41-4.17,6.06.38,2.65,3.41,4.55,6.06,4.17l16.29-3.03c2.65-.38,4.55-3.03,4.17-5.68Z" />
+              <path d="m7.23,533.33l61.36-4.17c3.03,0,5.3-3.03,5.3-6.06,0-3.41-3.03-5.68-6.06-5.68l-61.36,2.27c-3.79.38-6.82,3.41-6.44,7.2,0,3.79,3.41,6.82,7.2,6.44Z" />
+              <path d="m4.96,474.24l16.67.76c2.65.38,4.92-1.89,5.3-4.55.38-2.65-1.89-4.92-4.55-5.3l-16.67-1.14c-3.03,0-5.68,1.89-5.68,4.92,0,2.65,1.89,5.3,4.92,5.3Z" />
+              <path d="m12.91,417.8l60.23,10.23c3.41.38,6.06-1.89,6.82-4.92.76-3.03-1.52-6.06-4.55-6.82l-60.23-11.74c-3.79-.76-7.2,1.52-7.95,5.3-.38,3.79,1.89,7.2,5.68,7.95Z" />
+              <path d="m24.65,360.23l16.29,4.55c2.65.76,5.3-.76,6.06-3.41.76-2.65-.76-5.3-3.41-6.06l-15.91-4.92c-2.65-.76-5.68.76-6.44,3.41-.76,2.65.76,5.68,3.41,6.44Z" />
+              <path d="m45.49,307.2l56.82,23.48c3.03,1.14,6.44-.38,7.58-3.03,1.14-2.65,0-6.06-3.03-7.58l-55.68-25.38c-3.41-1.52-7.58,0-9.09,3.41-1.52,3.79,0,7.58,3.41,9.09Z" />
+              <path d="m70.11,253.41l14.39,8.33c2.27,1.14,5.3.38,6.82-1.89,1.52-2.27.76-5.3-1.52-6.82l-14.39-8.71c-2.65-1.52-5.68-.76-7.2,1.89-1.52,2.65-.76,5.68,1.89,7.2Z" />
+              <path d="m100.79,209.47l49.24,36.36c2.65,1.89,6.44,1.52,8.33-1.14s1.52-6.44-1.14-8.33l-48.48-37.5c-3.03-2.27-7.2-1.89-9.47,1.14-2.27,3.03-1.52,7.2,1.52,9.47Z" />
+              <path d="m149.65,173.86c1.89,1.52,4.92,1.52,6.82-.38s1.89-4.92,0-6.82l-12.12-11.74c-1.89-2.27-5.3-1.89-7.2,0s-1.89,5.3.38,7.2l12.12,11.74Z" />
+              <path d="m219.35,171.21c2.27,2.65,5.68,2.65,8.33.76,2.27-2.27,2.65-5.68.76-8.33l-38.64-47.73c-2.27-3.03-6.44-3.41-9.47-1.14-3.03,2.65-3.03,6.82-.76,9.85l39.77,46.59Z" />
+              <path d="m234.5,101.52c1.52,2.27,4.55,3.03,6.82,1.52,2.27-1.52,3.03-4.55,1.52-6.82l-9.09-14.02c-1.52-2.27-4.92-3.03-7.2-1.52-2.27,1.52-3.03,4.92-1.52,7.2l9.47,13.64Z" />
+              <path d="m303.06,115.15c1.52,3.03,4.92,4.17,7.95,2.65,2.65-1.52,4.17-4.92,2.65-7.95l-26.52-55.3c-1.52-3.41-5.68-4.55-9.09-3.03-3.41,1.52-4.92,5.68-3.03,9.09l28.03,54.55Z" />
+              <path d="m333.74,51.14c1.14,2.65,3.79,3.79,6.44,3.03,2.65-1.14,3.79-3.79,3.03-6.44l-5.3-15.91c-.76-2.65-3.79-4.17-6.44-3.03s-4.17,4.17-3.03,6.82l5.3,15.53Z" />
+              <path d="m395.11,80.68c.76,3.03,4.17,4.92,7.2,4.17,3.41-.76,5.3-3.79,4.55-6.82l-12.88-59.85c-.76-3.79-4.17-6.06-7.95-5.3-3.41,1.14-5.68,4.55-4.92,8.33l14.02,59.47Z" />
+              <path d="m443.97,25c0,2.65,2.65,4.55,5.3,4.17,2.65-.38,4.92-2.65,4.55-5.3l-1.52-16.67c-.38-2.65-2.65-4.92-5.68-4.55-2.65.38-4.92,2.65-4.55,5.68l1.89,16.67Z" />
+              <path d="m503.06,73.86c3.41,0,6.06-2.65,6.06-5.68l1.52-61.36c0-3.79-3.03-6.82-6.82-6.82s-6.82,3.03-6.82,6.82l.38,61.36c0,3.03,2.27,5.68,5.68,5.68Z" />
+              <path d="m558.37,30.68c2.65.38,5.3-1.52,5.68-4.17l2.27-17.05c.38-2.65-1.52-5.3-4.55-5.68-2.65-.38-5.3,1.52-5.68,4.55l-1.89,17.05c-.38,2.65,1.52,4.92,4.17,5.3Z" />
+              <path d="m601.55,86.74c3.03.76,6.44-1.14,7.2-4.17l15.53-59.47c.76-3.79-1.14-7.58-4.92-8.33-3.79-1.14-7.58,1.14-8.33,4.92l-13.64,59.85c-.76,3.41,1.14,6.44,4.17,7.2Z" />
+              <path d="m663.67,56.44c2.65.76,5.3-.38,6.44-3.03l6.06-15.53c1.14-2.65-.38-5.68-3.03-6.82-3.03-1.14-5.68.38-6.82,3.03l-5.68,15.91c-.76,2.65.38,5.68,3.03,6.44Z" />
+              <path d="m692.46,120.45c3.03,1.14,6.44.38,7.95-2.65l28.41-54.17c1.52-3.41.38-7.2-3.03-9.09-3.41-1.89-7.58-.38-9.09,3.03l-26.89,54.92c-1.52,3.03-.38,6.44,2.65,7.95Z" />
+            </svg>
+            <svg class="scale__indicators" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 1000">
+              <path class="indicator" d="m112.91,781.06l-13.64,9.85c-2.27,1.52-3.03,4.92-1.14,7.2,1.52,2.27,4.92,3.03,7.2,1.14l13.26-10.23c2.27-1.52,2.65-4.55,1.14-6.82-1.52-2.27-4.55-2.65-6.82-1.14Z" />
+              <path class="indicator" d="m120.87,708.71l-53.79,29.55c-3.41,1.52-4.55,5.68-2.65,9.09,1.89,3.03,6.06,4.17,9.47,2.27l52.65-30.68c3.03-1.52,3.79-5.3,2.27-7.95s-5.3-3.79-7.95-2.27Z" />
+              <path class="indicator" d="m64.05,685.61c-1.14-2.65-3.79-3.79-6.44-2.65l-15.53,6.44c-2.65,1.14-3.79,4.17-2.65,6.82,1.14,2.65,4.17,3.79,6.82,2.65l15.15-6.82c2.65-1.14,3.79-3.79,2.65-6.44Z" />
+              <path class="indicator" d="m90.94,621.59c-.76-3.41-4.17-4.92-7.2-4.17l-59.09,16.67c-3.41.76-5.68,4.55-4.55,8.33.76,3.79,4.55,5.68,8.33,4.55l58.71-18.18c3.03-.76,4.55-4.17,3.79-7.2Z" />
+              <path class="indicator" d="m32.61,578.41c-.38-2.65-3.03-4.55-5.68-4.17l-16.67,2.65c-2.65.38-4.55,3.41-4.17,6.06.38,2.65,3.41,4.55,6.06,4.17l16.29-3.03c2.65-.38,4.55-3.03,4.17-5.68Z" />
+              <path class="indicator" d="m7.23,533.33l61.36-4.17c3.03,0,5.3-3.03,5.3-6.06,0-3.41-3.03-5.68-6.06-5.68l-61.36,2.27c-3.79.38-6.82,3.41-6.44,7.2,0,3.79,3.41,6.82,7.2,6.44Z" />
+              <path class="indicator" d="m4.96,474.24l16.67.76c2.65.38,4.92-1.89,5.3-4.55.38-2.65-1.89-4.92-4.55-5.3l-16.67-1.14c-3.03,0-5.68,1.89-5.68,4.92,0,2.65,1.89,5.3,4.92,5.3Z" />
+              <path class="indicator" d="m12.91,417.8l60.23,10.23c3.41.38,6.06-1.89,6.82-4.92.76-3.03-1.52-6.06-4.55-6.82l-60.23-11.74c-3.79-.76-7.2,1.52-7.95,5.3-.38,3.79,1.89,7.2,5.68,7.95Z" />
+              <path class="indicator" d="m24.65,360.23l16.29,4.55c2.65.76,5.3-.76,6.06-3.41.76-2.65-.76-5.3-3.41-6.06l-15.91-4.92c-2.65-.76-5.68.76-6.44,3.41-.76,2.65.76,5.68,3.41,6.44Z" />
+              <path class="indicator" d="m45.49,307.2l56.82,23.48c3.03,1.14,6.44-.38,7.58-3.03,1.14-2.65,0-6.06-3.03-7.58l-55.68-25.38c-3.41-1.52-7.58,0-9.09,3.41-1.52,3.79,0,7.58,3.41,9.09Z" />
+              <path class="indicator" d="m70.11,253.41l14.39,8.33c2.27,1.14,5.3.38,6.82-1.89,1.52-2.27.76-5.3-1.52-6.82l-14.39-8.71c-2.65-1.52-5.68-.76-7.2,1.89-1.52,2.65-.76,5.68,1.89,7.2Z" />
+              <path class="indicator" d="m100.79,209.47l49.24,36.36c2.65,1.89,6.44,1.52,8.33-1.14s1.52-6.44-1.14-8.33l-48.48-37.5c-3.03-2.27-7.2-1.89-9.47,1.14-2.27,3.03-1.52,7.2,1.52,9.47Z" />
+              <path class="indicator" d="m149.65,173.86c1.89,1.52,4.92,1.52,6.82-.38s1.89-4.92,0-6.82l-12.12-11.74c-1.89-2.27-5.3-1.89-7.2,0s-1.89,5.3.38,7.2l12.12,11.74Z" />
+              <path class="indicator" d="m219.35,171.21c2.27,2.65,5.68,2.65,8.33.76,2.27-2.27,2.65-5.68.76-8.33l-38.64-47.73c-2.27-3.03-6.44-3.41-9.47-1.14-3.03,2.65-3.03,6.82-.76,9.85l39.77,46.59Z" />
+              <path class="indicator" d="m234.5,101.52c1.52,2.27,4.55,3.03,6.82,1.52,2.27-1.52,3.03-4.55,1.52-6.82l-9.09-14.02c-1.52-2.27-4.92-3.03-7.2-1.52-2.27,1.52-3.03,4.92-1.52,7.2l9.47,13.64Z" />
+              <path class="indicator" d="m303.06,115.15c1.52,3.03,4.92,4.17,7.95,2.65,2.65-1.52,4.17-4.92,2.65-7.95l-26.52-55.3c-1.52-3.41-5.68-4.55-9.09-3.03-3.41,1.52-4.92,5.68-3.03,9.09l28.03,54.55Z" />
+              <path class="indicator" d="m333.74,51.14c1.14,2.65,3.79,3.79,6.44,3.03,2.65-1.14,3.79-3.79,3.03-6.44l-5.3-15.91c-.76-2.65-3.79-4.17-6.44-3.03s-4.17,4.17-3.03,6.82l5.3,15.53Z" />
+              <path class="indicator" d="m395.11,80.68c.76,3.03,4.17,4.92,7.2,4.17,3.41-.76,5.3-3.79,4.55-6.82l-12.88-59.85c-.76-3.79-4.17-6.06-7.95-5.3-3.41,1.14-5.68,4.55-4.92,8.33l14.02,59.47Z" />
+              <path class="indicator" d="m443.97,25c0,2.65,2.65,4.55,5.3,4.17,2.65-.38,4.92-2.65,4.55-5.3l-1.52-16.67c-.38-2.65-2.65-4.92-5.68-4.55-2.65.38-4.92,2.65-4.55,5.68l1.89,16.67Z" />
+              <path class="indicator" d="m503.06,73.86c3.41,0,6.06-2.65,6.06-5.68l1.52-61.36c0-3.79-3.03-6.82-6.82-6.82s-6.82,3.03-6.82,6.82l.38,61.36c0,3.03,2.27,5.68,5.68,5.68Z" />
+              <path class="indicator" d="m558.37,30.68c2.65.38,5.3-1.52,5.68-4.17l2.27-17.05c.38-2.65-1.52-5.3-4.55-5.68-2.65-.38-5.3,1.52-5.68,4.55l-1.89,17.05c-.38,2.65,1.52,4.92,4.17,5.3Z" />
+              <path class="indicator" d="m601.55,86.74c3.03.76,6.44-1.14,7.2-4.17l15.53-59.47c.76-3.79-1.14-7.58-4.92-8.33-3.79-1.14-7.58,1.14-8.33,4.92l-13.64,59.85c-.76,3.41,1.14,6.44,4.17,7.2Z" />
+              <path class="indicator" d="m663.67,56.44c2.65.76,5.3-.38,6.44-3.03l6.06-15.53c1.14-2.65-.38-5.68-3.03-6.82-3.03-1.14-5.68.38-6.82,3.03l-5.68,15.91c-.76,2.65.38,5.68,3.03,6.44Z" />
+              <path class="indicator" d="m692.46,120.45c3.03,1.14,6.44.38,7.95-2.65l28.41-54.17c1.52-3.41.38-7.2-3.03-9.09-3.41-1.89-7.58-.38-9.09,3.03l-26.89,54.92c-1.52,3.03-.38,6.44,2.65,7.95Z" />
+            </svg>
+            <div class="arrow">
+              <div class="arrow__anchor">
+                <svg class="icon" viewBox="0 0 16 112.22" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path class="cls-1" d="m4.55,111.43c3.99,1.91,8.76.22,10.67-3.76,1.59-3.33.67-7.2-1.99-9.5L7.99,0,2.61,98.31c-.74.67-1.36,1.49-1.82,2.45-1.91,3.99-.22,8.76,3.76,10.67Z" fill="#e12c17" />
+                </svg>
+              </div>
+            </div>
+          </div>
+          <!-- Fuel Bar -->
+          <div class="fuel-bar">
+            <canvas class="bar" width="264" height="264"></canvas>
+            <svg class="icon" viewBox="0 0 17 17" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M2.12516 0C1.35258 0 0.708496 0.644084 0.708496 1.41667V16.2917C0.708537 16.6829 1.02564 17 1.41683 17H9.91683C10.308 17 10.6251 16.6829 10.6252 16.2917V13.1042C10.6252 12.9086 10.7837 12.75 10.9793 12.75H11.3335C11.7331 12.75 12.0418 13.0587 12.0418 13.4583V14.1667C12.0418 15.3319 13.0016 16.2917 14.1668 16.2917C15.332 16.2917 16.2918 15.3319 16.2918 14.1667V4.95833C16.2918 4.29009 15.977 3.659 15.4424 3.25806L13.1749 1.55778C12.8288 1.29828 12.3865 1.4238 12.1829 1.70028C11.9509 2.01549 12.012 2.45774 12.3254 2.69222L13.1749 3.32861C13.3535 3.46243 13.4586 3.67263 13.4585 3.89583V5.66667C13.4585 6.32001 13.9169 6.88041 14.5251 7.03906C14.714 7.08831 14.8752 7.2419 14.8752 7.4375V14.1667C14.8752 14.5663 14.5664 14.875 14.1668 14.875C13.7672 14.875 13.4585 14.5663 13.4585 14.1667V13.4583C13.4585 12.2931 12.4987 11.3333 11.3335 11.3333H10.9793C10.7837 11.3333 10.6252 11.1748 10.6252 10.9792V1.41667C10.6252 0.644084 9.98108 2.125e-08 9.2085 2.125e-08L2.12516 0ZM2.47933 1.41667H8.85433C9.05054 1.41667 9.2085 1.57462 9.2085 1.77083V6.72917C9.2085 6.92537 9.05054 7.08333 8.85433 7.08333H2.47933C2.28312 7.08333 2.12516 6.92537 2.12516 6.72917V1.77083C2.12516 1.57462 2.28312 1.41667 2.47933 1.41667Z" fill="white" />
+            </svg>
+          </div>
+          <!-- Strength Bar -->
+          <div class="strength-bar">
+            <canvas class="bar" width="264" height="264"></canvas>
+            <svg class="icon" width="17" height="21" viewBox="0 0 17 21" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M0.142795 17.2734C0.17203 17.2362 0.204547 17.2015 0.233231 17.1639L6.295 9.21137C6.53584 8.8954 6.5585 8.46975 6.41016 8.10118C5.72992 6.41108 5.94856 4.41693 7.16144 2.82573C8.27762 1.36141 10.0065 0.635407 11.713 0.693347C12.4095 0.716994 12.6785 1.51717 12.256 2.0714L10.6621 4.16258C10.3273 4.60181 10.4119 5.22929 10.8511 5.56409L12.0814 6.50188C12.5171 6.83397 13.1389 6.75372 13.4759 6.3219L15.1789 4.1403C15.5959 3.60606 16.4136 3.64141 16.6316 4.28313C17.1904 5.9282 16.9064 7.82921 15.7732 9.3159C14.5603 10.9071 12.6954 11.6464 10.8855 11.4384C10.4908 11.393 10.0863 11.5276 9.84549 11.8436L3.74064 19.8527C3.45487 20.2276 2.95936 20.2944 2.58445 20.0086L0.428723 18.3654C-0.00255002 18.1066 -0.0965786 17.578 0.142795 17.2734Z" fill="white" />
+            </svg>
+          </div>
+          <!-- Content -->
+          <div class="content">
+            <div class="content__row content__row--emergency">
+              <div class="emergency-indicator">
+                <div class="backdrop"></div>
+                <svg viewBox="0 0 30 25" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path fill-rule="evenodd" clip-rule="evenodd" d="M4.45166 25H25.5476C27.4013 25 28.9148 24.229 29.5969 23.0003C30.2806 21.7454 30.0848 20.1788 29.0841 18.6598L17.8408 1.63878C17.1338 0.602034 16.1099 0 15.0113 0C13.8894 0 12.8655 0.602034 12.1585 1.63878L0.915198 18.6598C-0.0854988 20.1788 -0.279664 21.77 0.402403 23.0003C1.08613 24.2536 2.59796 25 4.45166 25ZM4.45166 23.3137H25.5725C26.8172 23.3137 27.7183 22.9265 28.0601 22.2047C28.4501 21.5043 28.3041 20.5643 27.6453 19.5522L16.4019 2.55577C16.0368 2.00131 15.524 1.66339 14.988 1.66339C14.4271 1.66339 13.8894 2.00131 13.5492 2.55577L2.30423 19.5522C1.64705 20.5643 1.50101 21.5043 1.891 22.2047C2.30423 22.9035 3.20701 23.3137 4.45166 23.3137ZM14.3043 3.01345C14.4503 2.77231 14.7192 2.50656 15.0113 2.50656C15.3423 2.50656 15.5733 2.80195 15.6871 2.94753C15.6994 2.96323 15.7103 2.97719 15.7199 2.98885L26.9383 19.9852C27.4262 20.7333 27.5722 21.3599 27.3283 21.7946C27.0843 22.2277 26.4504 22.4688 25.5476 22.4688H4.45166C3.52398 22.4688 2.89004 22.2277 2.64609 21.7946C2.42703 21.3845 2.54818 20.7333 3.03608 20.0098L14.3043 3.01345ZM14.3033 16.1287H15.8568L16.1641 8.22443H13.9789L14.3033 16.1287ZM15.0715 19.7821C15.3902 19.7821 15.669 19.6682 15.908 19.4406C16.147 19.2016 16.2666 18.9228 16.2666 18.6041C16.2666 18.274 16.147 17.9952 15.908 17.7676C15.669 17.5286 15.3902 17.4091 15.0715 17.4091C14.7529 17.4091 14.474 17.5286 14.235 17.7676C14.0074 17.9952 13.8936 18.274 13.8936 18.6041C13.8936 18.9228 14.0074 19.2016 14.235 19.4406C14.474 19.6682 14.7529 19.7821 15.0715 19.7821Z" fill="#FC412B" />
+                </svg>
+              </div>
+            </div>
+            <div class="content__row content__row--mileage">
+              <span class="mileage-value">000000</span>
+            </div>
+            <div class="content__row">
+              <div class="turn-indicators">
+                <div class="light">
+                  <div class="light__arrow light__arrow--left">
+                    <div></div>
+                  </div>
+                  <div class="light__backdrop"></div>
+                </div>
+                <div class="light">
+                  <div class="light__arrow light__arrow--right">
+                    <div></div>
+                  </div>
+                  <div class="light__backdrop"></div>
+                </div>
+              </div>
+              <span class="speed-value">0</span>
+            </div>
+            <div class="content__row content__row--speed-units">
+              <span class="speed-units">km/h</span>
+            </div>
+            <div class="content__row content__row--indicators">
+              <div class="engine-indicator">
+                <svg class="icon" viewBox="0 0 24.07 17" xmlns="http://www.w3.org/2000/svg">
+                  <path d="m23.07,5.3h-3.07v1.4h-.93v-1.4h-1.71l-1.5-2.8h-3.14v-1.03h2.41c.41,0,.74-.33.74-.74s-.33-.74-.74-.74H6.74c-.41,0-.74.33-.74.74s.33.74.74.74h2.41v1.03h-3.14l-1.36,2.21h-1.79v3.97h-1.36v-3.97H0v9.94h1.5v-3.9h1.36v3.9h3.64l2,2.35h9.79l.79-.59v-1.41h.93v.97h3.07l1-2.58v-5.23l-1-2.87Z" fill="currentColor"/>
+                </svg>
+              </div>
+              <div class="doors-indicator">
+                <svg class="icon" viewBox="0 0 20 18" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M9.60528 0.666555C8.17502 0.666555 6.22161 1.53654 5.26535 2.59965L0.36483 8.04485C-0.273188 8.75335 -0.571174 10.0796 -0.296852 10.9938L1.30683 16.3394C1.58034 17.2525 2.585 18 3.53867 18H18.6679C19.626 18 20.4013 17.2239 20.4013 16.2666V1.66651C20.4013 1.11422 19.9536 0.666506 19.4013 0.666509L9.60528 0.666555ZM2.31667 8.46634L6.55337 3.75925C7.18311 3.06009 8.66588 2.39973 9.60528 2.39973H18.6679V8.46634H2.31667ZM18.6679 11.9332H15.2013V10.1998H18.6679V11.9332Z" fill="currentColor"/>
+                </svg>
+              </div>
+              <div class="headlights-indicator">
+                <svg class="icon" viewBox="0 0 18 18" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M10.5,1c-0.1-0.3-0.4-0.6-0.7-0.6C4.5,0.4,0.1,4.3,0.1,9s4.3,8.6,9.7,8.6c0.3,0,0.6-0.2,0.7-0.6l0.1-0.4 c0.8-5.1,0.8-10.2,0-15.2L10.5,1L10.5,1z" fill="currentColor"/>
+                  <path d="M13.1,5.6l3.9,1c0.1,0,0.2,0,0.4,0c0.2-0.1,0.4-0.3,0.5-0.5c0.1-0.4-0.1-0.8-0.5-0.9l-3.9-1c-0.4-0.1-0.7,0.2-0.8,0.5 S12.7,5.5,13.1,5.6z" fill="currentColor"/>
+                  <path d="M17.3,9.3l-3.9-1c-0.4-0.1-0.7,0.1-0.8,0.5s0.1,0.8,0.5,0.9l3.9,1c0.1,0,0.2,0,0.4,0c0.2-0.1,0.4-0.3,0.5-0.5 C17.9,9.7,17.7,9.3,17.3,9.3z" fill="currentColor"/>
+                </svg>
+              </div>
+              <div class="staging-indicator">
+                <svg class="icon" viewBox="0 0 11 18" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M8.16592 0.978709C8.24127 0.601771 8.04409 0.223203 7.69212 0.0688919C7.34005 -0.0854189 6.92801 0.0261503 6.70197 0.33701L0.156496 9.33697C-0.0245085 9.58588 -0.0505627 9.91518 0.0891066 10.1894C0.228776 10.4637 0.510449 10.6363 0.818207 10.6363H3.74746L2.47045 17.0213C2.39507 17.3982 2.59225 17.7768 2.94429 17.9311C3.29636 18.0854 3.70833 17.9739 3.93441 17.663L10.4798 8.66305C10.6609 8.41418 10.6869 8.08477 10.5472 7.81058C10.4075 7.53633 10.1258 7.36363 9.81814 7.36363H6.88888L8.16592 0.978709Z" fill="currentColor"/>
+                </svg>
+                <span class="stage">0</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+</body>
+<script src="assets/js/vue.js"></script>
+<script src="assets/js/hud.js?v=14311"></script>
+<script src="assets/js/speedometer.js"></script>
+<script src="assets/js/dialogs.js"></script>
+<script src="assets/js/vehicle-audio.js?v=148"></script>
+<script src="assets/js/vehicle-tint.js?v=161"></script>
+<script src="assets/js/responsive.js"></script>
+<script src="assets/js/old-radial.js?v=14278"></script>
+<script src="assets/js/client-build.js?v=141311"></script>
+<script src="assets/js/admin-spec.js?v=9"></script>
+<script src="assets/js/esc-menu.js?v=14363"></script>
+<script src="assets/js/f2-settings.js?v=14363"></script>
+<script src="assets/js/hotkeys.js?v=1"></script>
