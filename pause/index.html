@@ -33,6 +33,48 @@ html,body{height:100%;background:rgba(0,0,0,.55);color:var(--txt);font-family:"S
 .cbox p{margin-bottom:18px;font-size:15px}
 .cbox .b{background:#2a2a31;margin:0 6px}
 .cbox .b.yes{background:var(--acc);color:#241a07;font-weight:600}
+
+.set{position:fixed;inset:0;display:none;background:#0d0d0f;z-index:5;overflow:auto;--a:#2ee6e0;font-family:"Segoe UI",Roboto,Arial,sans-serif}
+.set.on{display:block}
+.set[data-t=game]{--a:#2ee6e0;--h:#127f84}.set[data-t=gfx]{--a:#3d7bff;--h:#1d3f8f}.set[data-t=snd]{--a:#d9f56b;--h:#5c6a2a}.set[data-t=ctl]{--a:#ff2d8a;--h:#8a1f55}.set[data-t=chat]{--a:#7a2cff;--h:#3d1d7a}
+.sban{margin:0 2.4%;border-radius:0 0 18px 18px;padding:22px 34px 74px;background:linear-gradient(180deg,var(--h),#161619);display:flex;justify-content:space-between;align-items:center;transition:background .2s}
+.sban h2{font-size:20px;letter-spacing:.12em}
+.pill{display:flex;gap:4px;padding:5px;border-radius:40px;background:rgba(0,0,0,.45);border:1px solid rgba(255,255,255,.1);width:max-content;margin:-34px auto 22px;position:relative}
+.pill b{padding:11px 26px;border-radius:30px;font-size:12px;letter-spacing:.1em;color:rgba(255,255,255,.62);cursor:pointer;font-weight:700}
+.pill b.on{background:rgba(255,255,255,.28);color:#fff}
+.lst{width:min(740px,94vw);margin:0 auto 60px;background:#1a1a1c;border:1px solid #2a2a2e;border-radius:14px;overflow:hidden}
+.rw{padding:14px 18px;border-top:1px solid #29292d;font-size:13px;display:flex;justify-content:space-between;align-items:center;gap:14px;min-height:52px}
+.rw:first-child{border-top:0}
+.rw i{display:inline-grid;place-items:center;width:14px;height:14px;border-radius:50%;border:1px solid #888;font:normal 9px sans-serif;color:#aaa;margin-left:8px;cursor:help;vertical-align:1px}
+.sw{width:48px;height:24px;border-radius:13px;background:#3a3a3e;position:relative;cursor:pointer;flex:none;transition:.15s}
+.sw::after{content:"";position:absolute;left:2px;top:2px;width:20px;height:20px;border-radius:50%;background:#fff;transition:.15s}
+.sw.on{background:var(--a)}.sw.on::after{left:26px}
+.sl{display:flex;align-items:center;gap:16px;width:240px}
+.sl input{flex:1;accent-color:var(--a);height:4px}
+.sl b{min-width:42px;text-align:right;font-size:13px}
+.sel{display:flex;align-items:center;gap:8px}
+.ar{width:26px;height:26px;border-radius:7px;background:#2a2a2e;display:grid;place-items:center;cursor:pointer;font-size:13px}
+.ar:hover{background:#38383d}
+.sv{width:120px;text-align:center;font-size:11px;font-weight:600;letter-spacing:.03em}
+.sv u{display:flex;gap:3px;margin-top:5px;text-decoration:none}.sv u s{flex:1;height:2px;background:#4a4a50}.sv u s.on{background:var(--a)}
+.num{display:flex;gap:6px;align-items:center}
+.num input{width:130px;background:#0b0b0c;border:1px solid #29292d;border-radius:8px;color:#fff;text-align:center;padding:10px;font-weight:700;font-size:13px;outline:none}
+.num input:focus{border-color:var(--a)}
+.hue{width:230px;height:16px;border-radius:9px;background:linear-gradient(90deg,#f00,#ff0,#0f0,#0ff,#00f,#f0f,#f00);-webkit-appearance:none;appearance:none;outline:none}
+.hue::-webkit-slider-thumb{-webkit-appearance:none;width:8px;height:22px;border-radius:4px;background:#fff;border:1px solid #000}
+.dd{position:relative}.dd b{font-size:13px;letter-spacing:.04em;margin-right:8px;cursor:pointer}
+.dm{position:absolute;right:0;top:34px;background:#222226;border:1px solid #38383d;border-radius:10px;z-index:3;display:none;min-width:130px;overflow:hidden}
+.dm.on{display:block}.dm div{padding:9px 14px;cursor:pointer;font-size:12px}.dm div:hover{background:var(--a);color:#000}
+.gh{padding:8px 14px;margin:14px 0 0 14px;display:inline-block;background:#26262a;border-radius:10px;font-size:11px;font-weight:700;letter-spacing:.1em;color:#ddd}
+.kr{display:grid;grid-template-columns:160px 1fr;gap:10px;align-items:center;padding:7px 18px;border-top:1px solid #29292d;font-size:12px;min-height:54px}
+.kc{display:flex;gap:30px}
+.k{min-width:32px;height:32px;padding:0 9px;border-radius:7px;background:linear-gradient(#3d3d48,#2a2a33);border:1px solid #4a4a56;display:grid;place-items:center;font-size:11px;font-weight:700;cursor:pointer;width:max-content}
+.k:hover{border-color:var(--a)}.k.ls{border-color:var(--a);color:var(--a)}.k.ad{background:transparent;border-style:dashed;color:#777}
+.kw{width:150px;display:flex}
+.rs{padding:22px;text-align:center;border-top:1px solid #29292d;cursor:pointer;font-size:12px;font-weight:700;letter-spacing:.06em}.rs:hover{color:var(--a)}
+.b.main{background:rgba(255,255,255,.16);color:#fff}
+.tt{position:fixed;background:#2a2a2e;border:1px solid #444;border-radius:8px;padding:8px 12px;font-size:12px;max-width:260px;z-index:9;display:none;pointer-events:none}
+
 </style>
 </head>
 <body>
@@ -48,6 +90,13 @@ html,body{height:100%;background:rgba(0,0,0,.55);color:var(--txt);font-family:"S
   </div>
 </div>
 <div class="foot"><span>Absolute Online</span><span>ESC — закрыть</span></div>
+
+<div class="set" id="set" data-t="game">
+  <div class="sban"><h2>НАСТРОЙКИ</h2><button class="b main" id="sBack">Назад</button></div>
+  <div class="pill" id="pill"></div>
+  <div class="lst" id="lst"></div>
+</div><div class="tt" id="tt"></div>
+
 <div class="confirm" id="cf"><div class="cbox"><p id="cfT"></p><button class="b yes" id="cfY">Да</button><button class="b" id="cfN">Отмена</button></div></div>
 <script>
 const hasCef=typeof cef!=='undefined'&&cef&&typeof cef.emit==='function';
@@ -57,7 +106,7 @@ let pending=null,t0=Date.now();
 const act=a=>emit('pause:action',a);
 
 $('bResume').onclick=()=>act('resume');
-$('bSettings').onclick=()=>act('settings');
+$('bSettings').onclick=()=>openSet();
 function ask(text,a){pending=a;$('cfT').textContent=text;$('cf').classList.add('on')}
 $('bReconnect').onclick=()=>ask('Переподключиться к серверу?','reconnect');
 $('bQuit').onclick=()=>ask('Выйти из игры?','quit');
@@ -66,16 +115,141 @@ $('cfY').onclick=()=>{if(pending)act(pending);pending=null;$('cf').classList.rem
 
 document.addEventListener('keydown',e=>{
   if(e.key==='Escape'){e.preventDefault();
+    if($('set').classList.contains('on')){closeSet();return}
     if($('cf').classList.contains('on')){$('cfN').click();return}
     act('resume')}
 });
 document.addEventListener('contextmenu',e=>e.preventDefault());
+
+
+/* ---- settings: localStorage 'ao_settings' + event pause:settings (JSON) ---- */
+const sw=(id,l,d,tip)=>({id,l,t:'sw',d,tip}),sg=(id,l,d,o,tip)=>({id,l,t:'seg',d,o,tip}),rg=(id,l,d,min,max,tip,fmt)=>({id,l,t:'rg',d,min,max,tip,fmt}),nm=(id,l,d,tip)=>({id,l,t:'num',d,tip});
+const SET=[
+['game','ГЕЙМПЛЕЙ',[
+ {id:'hue',l:'Цвет паузы',t:'hue',d:40,tip:'Цвет окна паузы'},
+ sg('tab',  'Главная страница TAB',1,['СТАТИСТИКА','ИНВЕНТАРЬ','ПРИЗЫ','НАВЫКИ'],'Какая вкладка открывается при нажатии TAB'),
+ sw('roul','Уведомление о выдаче рулетки',1,'Сообщение, когда выдана бесплатная рулетка'),
+ sg('tcyc','Таймцикл',0,['СТАНДАРТНЫЙ','ДЕНЬ','НОЧЬ','ВЕЧЕР'],'Освещение мира'),
+ sg('cross','Прицел',2,['(1)','(2)','(3)','(4)'],'Вид прицела'),
+ sg('stream','Стриминговая память',1,['512','1024','2048','3072','4096'],'Память для подгрузки объектов'),
+ sw('silent','Silent Patch',1,'Убирает лишние звуки и тряску'),
+ sw('heavy','Heavy Fist',0,'Тяжёлые удары кулаком'),
+ sw('dmgi','Индикатор получения урона',1,'Показывать направление урона'),
+ sw('aimi','Анимированный индикатор прицеливания',1,'Анимация при наведении на цель'),
+ sw('keyh','Помощь по клавишам',0,'Подсказки по клавишам на экране'),
+ sw('t3d','Отображать 3D тексты',1),
+ sw('nick','Отображать ники игроков',1),
+ sw('flab','Отображение лейбла семьи',0,'Метка семьи над игроком'),
+ sw('emoji','Отключить чужие эмодзи',0),
+ sg('death','При смерти Вы будете автоматически',0,['ЖДАТЬ ПОМОЩИ','ВЫЗВАТЬ ВРАЧЕЙ'],'Действие при смерти'),
+ sw('fspawn','Спавн в особняке семьи',1,'Появляться в особняке семьи'),
+ sg('cont','Автоматическая сдача контракта',0,['ВЫБРАТЬ ПРИ СДАЧЕ','ВСЕГДА СДАВАТЬ','НЕ СДАВАТЬ']),
+ sw('gang','Отображение территорий банд',0),
+ sw('dmgn','Показ нанесенного или полученного урона',1)]],
+['gfx','ГРАФИКА',[
+ {id:'res',l:'Разрешение',t:'dd',d:'1280 X 800',o:['1024 X 768','1280 X 720','1280 X 800','1366 X 768','1600 X 900','1920 X 1080']},
+ sg('wmode','Режим отображения',0,['ОКОННЫЙ','ПОЛНОЭКРАННЫЙ'],'Режим окна игры'),
+ sg('wide','Широкоэкранный режим',0,['ВЫКЛЮЧЕН','ВКЛЮЧЁН'],'Растягивает картинку на весь экран'),
+ rg('bright','Яркость',50,0,100,'Яркость интерфейса'),
+ rg('fps','Ограничитель FPS',0,0,240,'0 = без ограничения',v=>v?v:'ВЫКЛ'),
+ sg('aa','Сглаживание',0,['ВЫКЛЮЧЕНО','2X','4X','8X','16X']),
+ sg('det','Качество деталей',0,['НИЗКОЕ','СРЕДНЕЕ','ВЫСОКОЕ']),
+ rg('dist','Дальность прорисовки',187,50,1200,'Дальность отрисовки объектов'),
+ sw('fx','Эффекты',0,'Частицы и эффекты'),
+ sw('post','Постобработка',0,'Цветокоррекция, свечение'),
+ sw('shad','Тени',0),
+ sw('refl','Отражения на транспорте',0)]],
+['snd','ЗВУК',[
+ rg('env','Окружение',9,0,100,'Громкость окружения'),
+ rg('shoot','Стрельба',3,0,100),
+ sg('hits','Звук попадания по противнику',1,['ВЫКЛЮЧЕН','ВКЛЮЧЕН'],'Сигнал при попадании'),
+ {id:'hitt',l:'Тип звука при попадании по противнику',t:'seg',d:4,o:['1','2','3','4','5','6','7','8','9']},
+ sw('mute','Отключить все звуки, кроме стрельбы',0,'Оставляет только звуки выстрелов'),
+ sw('dmgs','Звук при получении урона',1),
+ sw('others','Отключить звук чужих выстрелов',1),
+ sw('bgm','Фоновое звуковое сопровождение',1,'Фоновая музыка сервера'),
+ sw('caraud','Аудиосистемы транспорта и муз. центры',1)]],
+['ctl','УПРАВЛЕНИЕ',[
+ rg('sens','Чувствительность',25,1,100,'Скорость поворота камеры'),
+ nm('sensA','Чувствительность при прицеливании',0.0125,'Чувствительность при прицеливании'),
+ nm('sensS','Чувствительность в снайперском режиме',0.0125,'Чувствительность в снайперском режиме'),
+ sw('inv','Инверсия мыши',0),
+ sw('fly','Управление полетом',1,'Управление самолётами и вертолётами'),
+ sw('autoc','Авто-центрирование камеры в транспорте',0,'Камера возвращается за машину')]],
+['chat','ЧАТ',[
+ sw('ooc','Отображение ООС сообщений (/b)',1),
+ sg('cfr','Отображение сообщений фракции',0,['ВКЛЮЧЕНЫ ВСЕ ЧАТЫ','ТОЛЬКО МОЯ','ВЫКЛЮЧЕНЫ'],'Чат организаций'),
+ sg('cfa','Отображение сообщений семьи',0,['ВКЛЮЧЕНЫ ВСЕ ЧАТЫ','ТОЛЬКО МОЯ','ВЫКЛЮЧЕНЫ']),
+ sg('cwo','Отображение сообщений работы',0,['ВКЛЮЧЕНЫ ВСЕ ЧАТЫ','ТОЛЬКО МОЯ','ВЫКЛЮЧЕНЫ']),
+ sg('cco','Отображение сообщений компании',0,['ВКЛЮЧЕНЫ ВСЕ ЧАТЫ','ТОЛЬКО МОЯ','ВЫКЛЮЧЕНЫ']),
+ sw('ctr','Оповещения о контрактах в чате дальнобойщиков',1),
+ sw('cadm','Отображение действий администрации',1,'Сообщения о действиях админов'),
+ sw('cnews','Отображение новостей',1,'Новости сервера в чате')]]];
+const KEYS=[
+['УПРАВЛЕНИЕ ПЕРСОНАЖЕМ',[['w_f','Вперёд',['↑','W']],['w_b','Назад',['S']],['w_l','Влево',['←','A']],['w_r','Вправо',['→','D']],['w_j','Прыгнуть',['R. Ctrl','Space']],['w_c','Присесть',['C']],['w_s','Быстрый бег',['L. Shift']],['w_w','Медленная ходьба',['L. Alt']],['w_a','Атака',['Num 0','L. Ctrl','ЛКМ']],['w_m','Прицеливание',['Del','CapsLock','ПКМ']],['w_n','Следующее оружие',['E','Enter','Колесо мыши вниз']],['w_p','Предыдущее оружие',['Q','Num .','Колесо мыши вверх']],['w_d','Сесть как водитель',['F','Enter']],['w_g','Сесть как пассажир',['G']],['w_v','Сменить вид камеры',['V','Home']]]],
+['УПРАВЛЕНИЕ ТРАНСПОРТОМ',[['v_g','Газ',['W','Колесо мыши вниз']],['v_b','Задний ход',['S']],['v_l','Влево',['A','←']],['v_r','Вправо',['D','→']],['v_h','Ручной тормоз',['Space','R. Ctrl']],['v_a','Атака',['R. Ctrl','L. Alt','ЛКМ']],['v_x','Альтернативная атака',['L. Ctrl','Num 0']],['v_e','Выход из транспорта',['F','Enter']],['v_n','Нитро',['L. Shift']],['v_k','Гудок',['ЛКМ']],['v_v','Сменить вид камеры',['V','Home']],['f_u','Полёт: Наклон вперед',['↑']],['f_d','Полёт: Наклон назад',['↓']],['f_l','Полёт: Разворот влево',['Q']],['f_r','Полёт: Разворот вправо',['E']]]],
+['ВОЙС-ЧАТ',[['c_n','Рядом',['X']],['c_r','Рация (организация)',['Z']],['c_f','Семья',['U']],['c_m','Мегафон',['G']],['c_a','Для администрации',['T']],['c_t','Транспортная компания',['I']]]],
+['ОСОБЫЕ КЛАВИШИ',[['s_a','Действие',['E']],['s_r','Круговое меню',['R']],['s_l','Замок транспорта',['СКМ']],['s_o','Меню анимаций',['O']]]]];
+const DEF={keys:{}};SET.forEach(t=>t[2].forEach(r=>DEF[r.id]=r.d));KEYS.forEach(g=>g[1].forEach(k=>DEF.keys[k[0]]=k[2].slice()));
+let S=JSON.parse(JSON.stringify(DEF)),curT='game',listen=null;
+try{const o=JSON.parse(localStorage.getItem('ao_settings')||'{}');Object.assign(S,o);S.keys=Object.assign({},DEF.keys,o.keys||{})}catch(e){}
+let saveT=null;
+function apply(){document.documentElement.style.setProperty('--acc','hsl('+S.hue+',70%,60%)');document.documentElement.style.setProperty('--acc2','hsl('+S.hue+',80%,75%)');
+ document.body.style.filter='brightness('+(0.5+S.bright/100).toFixed(2)+')';
+ try{window.dispatchEvent(new Event('ao-settings'))}catch(e){}}
+function save(){apply();clearTimeout(saveT);saveT=setTimeout(()=>{const j=JSON.stringify(S);try{localStorage.setItem('ao_settings',j)}catch(e){}
+ try{new BroadcastChannel('ao_settings').postMessage(S)}catch(e){}emit('pause:settings',j)},150)}
+const esc=s=>String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+const fnum=v=>String(+(+v).toFixed(4)).replace('.',',');
+const tip=r=>r.tip?'<i data-tip="'+esc(r.tip)+'">i</i>':'';
+function row(r){const v=S[r.id],L='<div>'+esc(r.l||'')+tip(r)+'</div>';let c='';
+ if(r.t==='sw')c='<div class="sw'+(v?' on':'')+'" data-id="'+r.id+'"></div>';
+ else if(r.t==='seg')c='<div class="sel"><div class="ar" data-id="'+r.id+'" data-d="-1">‹</div><div class="sv">'+esc(r.o[v])+'<u>'+r.o.map((_,i)=>'<s class="'+(i===v?'on':'')+'"></s>').join('')+'</u></div><div class="ar" data-id="'+r.id+'" data-d="1">›</div></div>';
+ else if(r.t==='rg')c='<div class="sl"><input type="range" data-id="'+r.id+'" min="'+r.min+'" max="'+r.max+'" value="'+v+'"><b>'+(r.fmt?r.fmt(v):v)+'</b></div>';
+ else if(r.t==='num')c='<div class="num"><input data-id="'+r.id+'" value="'+fnum(v)+'"><div class="ar" data-id="'+r.id+'" data-n="-1">⌄</div><div class="ar" data-id="'+r.id+'" data-n="1">⌃</div></div>';
+ else if(r.t==='hue')c='<div class="sel"><input class="hue" type="range" data-id="hue" min="0" max="360" value="'+v+'"><div class="ar" data-id="hue" data-rs="1">⟳</div></div>';
+ else if(r.t==='dd')c='<div class="dd"><b data-dd="'+r.id+'">'+esc(v)+'</b><span class="ar" style="display:inline-grid" data-dd="'+r.id+'">⌄</span><div class="dm" id="dm_'+r.id+'">'+r.o.map(o=>'<div data-id="'+r.id+'" data-o="'+o+'">'+o+'</div>').join('')+'</div></div>';
+ return '<div class="rw">'+L+c+'</div>'}
+const kn=e=>{const c=e.code;if(/^Key/.test(c))return c.slice(3);if(/^Digit/.test(c))return c.slice(5);if(/^Numpad/.test(c)){const m={NumpadDecimal:'Num .',NumpadEnter:'Num Enter'};return m[c]||'Num '+c.slice(6)}
+ const m={ArrowUp:'↑',ArrowDown:'↓',ArrowLeft:'←',ArrowRight:'→',ControlLeft:'L. Ctrl',ControlRight:'R. Ctrl',ShiftLeft:'L. Shift',ShiftRight:'R. Shift',AltLeft:'L. Alt',AltRight:'R. Alt',Space:'Space',Enter:'Enter',CapsLock:'CapsLock',Delete:'Del',Home:'Home',End:'End',Tab:'Tab',Backspace:'Backspace',Insert:'Ins',PageUp:'PgUp',PageDown:'PgDn'};return m[c]||e.key.toUpperCase()};
+function keysHtml(){return KEYS.map(g=>'<div class="gh">'+g[0]+'</div>'+g[1].map(k=>{const a=S.keys[k[0]]||[];return '<div class="kr"><div>'+esc(k[1])+'</div><div class="kc">'+a.map((x,i)=>'<div class="kw"><div class="k" data-k="'+k[0]+'" data-i="'+i+'">'+esc(x)+'</div></div>').join('')+(a.length<3?'<div class="kw"><div class="k ad" data-k="'+k[0]+'" data-i="'+a.length+'">+</div></div>':'')+'</div></div>'}).join('')).join('')+'<div class="rs" id="rsK">СБРОСИТЬ ДО СТАНДАРТНЫХ</div>'}
+function draw(){const t=SET.find(x=>x[0]===curT);$('set').dataset.t=curT;
+ $('pill').innerHTML=SET.map(x=>'<b data-t="'+x[0]+'" class="'+(x[0]===curT?'on':'')+'">'+x[1]+'</b>').join('');
+ $('lst').innerHTML=t[2].map(row).join('')+(curT==='ctl'?keysHtml():'');
+ $('pill').querySelectorAll('b').forEach(b=>b.onclick=()=>{curT=b.dataset.t;draw();$('set').scrollTop=0});
+ const L=$('lst');
+ L.querySelectorAll('.sw').forEach(e=>e.onclick=()=>{S[e.dataset.id]=S[e.dataset.id]?0:1;save();draw()});
+ L.querySelectorAll('[data-d]').forEach(e=>e.onclick=()=>{const r=find(e.dataset.id),n=r.o.length;S[r.id]=(S[r.id]+ +e.dataset.d+n)%n;save();draw()});
+ L.querySelectorAll('input[type=range]').forEach(e=>e.oninput=()=>{S[e.dataset.id]=+e.value;const r=find(e.dataset.id);if(e.nextSibling&&e.nextSibling.tagName==='B')e.nextSibling.textContent=r&&r.fmt?r.fmt(+e.value):e.value;save()});
+ L.querySelectorAll('[data-rs]').forEach(e=>e.onclick=()=>{S.hue=DEF.hue;save();draw()});
+ L.querySelectorAll('[data-n]').forEach(e=>e.onclick=()=>{S[e.dataset.id]=Math.max(0,+(S[e.dataset.id]+ +e.dataset.n*0.0025).toFixed(4));save();draw()});
+ L.querySelectorAll('.num input').forEach(e=>e.onchange=()=>{const v=parseFloat(e.value.replace(',','.'));S[e.dataset.id]=isNaN(v)?DEF[e.dataset.id]:Math.max(0,v);save();draw()});
+ L.querySelectorAll('[data-dd]').forEach(e=>e.onclick=ev=>{ev.stopPropagation();const m=$('dm_'+e.dataset.dd);m.classList.toggle('on')});
+ L.querySelectorAll('.dm div').forEach(e=>e.onclick=()=>{S[e.dataset.id]=e.dataset.o;save();draw()});
+ L.querySelectorAll('.k').forEach(e=>e.onclick=()=>{listen={k:e.dataset.k,i:+e.dataset.i};draw2(e)});
+ if($('rsK'))$('rsK').onclick=()=>{S.keys=JSON.parse(JSON.stringify(DEF.keys));save();draw()};
+ L.querySelectorAll('[data-tip]').forEach(e=>{e.onmouseenter=ev=>{const t=$('tt');t.textContent=e.dataset.tip;t.style.display='block';t.style.left=Math.min(ev.clientX+12,innerWidth-280)+'px';t.style.top=(ev.clientY+14)+'px'};e.onmouseleave=()=>$('tt').style.display='none'})}
+function draw2(e){e.textContent='...';e.classList.add('ls')}
+function find(id){for(const t of SET){const r=t[2].find(x=>x.id===id);if(r)return r}}
+document.addEventListener('click',()=>document.querySelectorAll('.dm.on').forEach(m=>m.classList.remove('on')));
+function bind(name){if(!listen)return;const a=S.keys[listen.k]=S.keys[listen.k]||[];a[listen.i]=name;S.keys[listen.k]=a.filter((x,i,arr)=>x&&arr.indexOf(x)===i);listen=null;save();draw()}
+document.addEventListener('keydown',e=>{if(!listen)return;e.preventDefault();e.stopImmediatePropagation();
+ if(e.key==='Escape'){listen=null;draw();return}
+ if(e.key==='Backspace'){const a=S.keys[listen.k];if(a)a.splice(listen.i,1);listen=null;save();draw();return}
+ bind(kn(e))},true);
+document.addEventListener('mousedown',e=>{if(listen&&e.target.closest('.k')===null){listen=null;draw();return}
+ if(listen&&e.target.classList.contains('ls')&&e.button===0)return;if(listen&&e.button>0){e.preventDefault();bind(['ЛКМ','СКМ','ПКМ'][e.button]||'Mouse'+e.button)}},true);
+document.addEventListener('wheel',e=>{if(listen){e.preventDefault();bind(e.deltaY>0?'Колесо мыши вниз':'Колесо мыши вверх')}},{passive:false,capture:true});
+const openSet=()=>{draw();$('set').classList.add('on')},closeSet=()=>{listen=null;$('set').classList.remove('on')};
+$('sBack').onclick=closeSet;apply();
+
 
 // session timer (server may overwrite via pause:data)
 function tick(){const s=Math.floor((Date.now()-t0)/1000),m=Math.floor(s/60);
   $('sess').textContent='В паузе: '+String(m).padStart(2,'0')+':'+String(s%60).padStart(2,'0')}
 setInterval(tick,1000);tick();
 function onData(d){if(typeof d==='string'){try{d=JSON.parse(d)}catch(e){return}}
+  if(d.settings&&typeof d.settings==='object'){Object.assign(S,d.settings);apply()}
   if(d.name)$('nick').textContent=d.name+(d.id!=null?' ['+d.id+']':'')}
 if(hasCef&&typeof cef.on==='function'){cef.on('pause:data',onData);emit('pause:ready','')}
 else{onData({name:'Luis_Topovich',id:0})}
